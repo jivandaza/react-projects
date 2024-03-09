@@ -5,7 +5,7 @@ export const BTN_ACTIONS = {
     DELETE: 'DELETE'
 }
 
-export const btn = [
+export const btns = [
     {
         display: 'C',
         action: BTN_ACTIONS.DELETE,
