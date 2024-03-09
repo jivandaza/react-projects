@@ -22,11 +22,6 @@ export const btns = [
         class: 'btn__op'
     },
     {
-        display: '(',
-        action: BTN_ACTIONS.ADD,
-        class: 'btn__op'
-    },
-    {
         display: '/',
         action: BTN_ACTIONS.ADD,
         class: 'btn__op'
