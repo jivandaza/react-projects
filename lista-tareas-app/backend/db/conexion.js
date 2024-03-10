@@ -7,11 +7,11 @@ const conn = async (req, res) => {
         await mongoose
                 .connect(URL_NAME)
                 .then(() => {
-                    console.log('Established connection');
+                    console.log('Conexión establecida a la base de datos');
                 });
     } catch (err) {
         res.status(400).json({
-           message: 'Not connected'
+           message: 'Conexión no establecida a la base de datos'
         });
     }
 }
