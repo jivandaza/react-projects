@@ -14,7 +14,7 @@ const usuarioSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    list: [
+    lista: [
         {
             type: mongoose.Types.ObjectId,
             ref: 'Lista'
