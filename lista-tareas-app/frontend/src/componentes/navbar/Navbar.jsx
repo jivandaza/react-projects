@@ -1,60 +1,61 @@
 import './../../estilos/navbar.css';
 import { GiWhiteBook } from 'react-icons/gi';
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container">
-                <a className="navbar-brand" href="#">
+                <Link className="navbar-brand" to="/">
                     <b><GiWhiteBook /> &nbsp;Tareas MERN</b>
-                </a>
+                </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li className="nav-item mx-2">
-                            <a
+                            <Link
                                 className="nav-link active"
                                 aria-current="page"
-                                href="#"
-                            >Inicio</a>
+                                to="/"
+                            >Inicio</Link>
                         </li>
                         <li className="nav-item mx-2">
-                            <a
+                            <Link
                                 className="nav-link active"
                                 aria-current="page"
-                                href="#"
-                            >Acerca De</a>
+                                to="/acerca"
+                            >Acerca De</Link>
                         </li>
                         <li className="nav-item mx-2">
-                            <a
+                            <Link
                                 className="nav-link active"
                                 aria-current="page"
-                                href="#"
-                            >Tareas</a>
+                                to="/tareas"
+                            >Tareas</Link>
                         </li>
                         <li className="nav-item mx-2">
-                            <a
+                            <Link
                                 className="nav-link active btn-nav"
                                 aria-current="page"
-                                href="#"
-                            >Registrarse</a>
+                                to="/registrarse"
+                            >Registrarse</Link>
                         </li>
                         <li className="nav-item mx-2">
-                            <a
+                            <Link
                                 className="nav-link active btn-nav"
                                 aria-current="page"
-                                href="#"
-                            >Acceder</a>
+                                to="/acceso"
+                            >Acceder</Link>
                         </li>
                         <li className="nav-item mx-2">
-                            <a
+                            <Link
                                 className="nav-link active btn-nav"
                                 aria-current="page"
-                                href="#"
-                            >Cerrar Sesión</a>
+                                to="/cerrarsesion"
+                            >Cerrar Sesión</Link>
                         </li>
                     </ul>
                 </div>
