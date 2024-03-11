@@ -100,6 +100,6 @@ ruta.post('/acceso', async (req, res) => {
             message: 'Ocurrió un error al acceder'
         });
     }
-})
+});
 
-export default ruta
+export default ruta;
