@@ -1,4 +1,5 @@
 import './../../estilos/registrarse.css';
+import Titulo from './../titulo/Titulo';
 import React from 'react';
 
 const Registrarse = () => {
@@ -29,10 +30,11 @@ const Registrarse = () => {
                             <button className='p-2 btn-signup'>Registrarse</button>
                         </div>
                     </div>
-                    <div className="col-lg-4 vh-100 border-start border-1 border-black d-flex justify-content-center align-items-center">
-                        <h1 className='text-center signup-heading'>
-                            Registrar <br /> Se
-                        </h1>
+                    <div className="col-lg-4 vh-100 border-start border-1 border-black d-lg-flex justify-content-center align-items-center d-none">
+                        <Titulo
+                            primero='Registrar'
+                            segundo='Usuario'
+                        />
                     </div>
                 </div>
             </div>
