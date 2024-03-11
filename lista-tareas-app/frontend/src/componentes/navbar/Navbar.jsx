@@ -19,7 +19,7 @@ const Navbar = () => {
                                 className="nav-link active"
                                 aria-current="page"
                                 href="#"
-                            >Home</a>
+                            >Inicio</a>
                         </li>
                         <li className="nav-item mx-2">
                             <a

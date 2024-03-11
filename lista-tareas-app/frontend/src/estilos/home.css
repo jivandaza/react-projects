@@ -15,6 +15,7 @@
     border-radius: 1rem;
     color: white !important;
     font-weight: bold;
+    user-select: none;
 }
 .home-btn:hover {
     opacity: .7;

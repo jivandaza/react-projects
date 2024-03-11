@@ -1,7 +1,7 @@
 import './../../estilos/home.css';
 import React from 'react';
 
-const Home = () => {
+const Inicio = () => {
     return (
         <div className='home d-flex justify-content-center align-items-center'>
             <div className="container d-flex justify-content-start align-items-start flex-column w-auto">
@@ -13,11 +13,11 @@ const Home = () => {
                     La aplicación de gestión de tareas número uno del mundo.
                 </p>
                 <button className='align-self-end home-btn p-2'>
-                    Empezar Tareas
+                    Empezar Ahora
                 </button>
             </div>
         </div>
     );
 };
 
-export default Home;
+export default Inicio;

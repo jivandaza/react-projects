@@ -4,6 +4,9 @@
 .footer:hover {
     opacity: .7;
 }
-.footer h4, p {
+.footer h4 {
+    user-select: none;
+}
+.footer p {
     user-select: none;
 }
