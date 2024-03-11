@@ -1,9 +1,10 @@
+import './../../estilos/acerca.css';
 import React from 'react';
 
 const Acerca = () => {
     return (
         <div className='about d-flex justify-content-center align-items-center'>
-            <div className="conatiner">
+            <div className="container">
                 <div className='d-flex justify-content-center align-items-center'>
                     <h1>Acerca De</h1>
                 </div>
