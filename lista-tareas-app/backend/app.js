@@ -1,5 +1,6 @@
-import express from 'express';
 import './db/conexion.js';
+import express from 'express';
+import cors from 'cors';
 import auth from './rutas/autenticacion.js';
 import tarea from './rutas/lista.js';
 
@@ -7,6 +8,7 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('Hola Mundo!');
