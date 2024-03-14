@@ -1,9 +1,9 @@
 import './../../estilos/registrarse.css';
 import 'react-toastify/dist/ReactToastify.css';
-import Titulo from './../titulo/Titulo';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import Titulo from './../titulo/Titulo';
 import React, {useState} from 'react';
 
 const Registrarse = () => {
