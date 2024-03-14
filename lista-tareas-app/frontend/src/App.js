@@ -6,9 +6,19 @@ import Acceso from './componentes/acceso/Acceso';
 import Tarea from './componentes/tarea/Tarea';
 import Footer from './componentes/footer/Footer';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from "./store/index";
 import './App.css';
+import { useEffect } from "react";
 
 function App() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const id = sessionStorage.getItem('id');
+        if ( id ) {
+            dispatch(authActions.login());
+        }
+    }, []);
     return (
         <div className="App">
             <Router>
