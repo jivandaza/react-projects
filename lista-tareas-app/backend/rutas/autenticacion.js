@@ -71,6 +71,7 @@ ruta.post('/registrar', async (req, res) => {
 ruta.post('/acceso', async (req, res) => {
     try {
         const { correoFrm, contraseniaFrm } = req.body;
+        const err = true;
 
         if ( !correoFrm ) {
             return res.status(400).json({
@@ -85,8 +86,9 @@ ruta.post('/acceso', async (req, res) => {
         const usuario = await Usuario.findOne({ correo: correoFrm });
 
         if ( !usuario ) {
-            return res.status(400).json({
-               message: 'Por favor, regístrate primero'
+            return res.status(200).json({
+               message: 'El usuario no esta regístrado',
+               err
             });
         }
 
@@ -96,17 +98,22 @@ ruta.post('/acceso', async (req, res) => {
         );
 
         if ( !esContraseniaCorrecta ) {
-            return res.status(400).json({
-                message: 'La contraseña no es correcta'
+            return res.status(200).json({
+                message: 'La contraseña es incorrecta',
+                err
             });
         }
 
         const { contrasenia, ...others } = usuario._doc;
-        return res.status(200).json({others});
+        return res.status(200).json({
+            user: others,
+            message: 'Iniciando sesión...',
+            err: false
+        });
     } catch (err) {
         console.error(err);
 
-        return res.status(400).json({
+        return res.status(500).json({
             message: 'Ocurrió un error al acceder'
         });
     }
