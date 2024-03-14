@@ -1,11 +1,21 @@
 import './../../estilos/navbar.css';
 import { GiWhiteBook } from 'react-icons/gi';
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { authActions } from "../../store";
+
 import React from 'react';
 
 const Navbar = () => {
+    const history = useNavigate();
+    const dispatch = useDispatch();
     const isLoggedIn = useSelector((state) => state.isLoggedIn);
+    const logout = () => {
+        sessionStorage.clear('id');
+        dispatch(authActions.logout());
+        history('/');
+    }
     return (
         <nav className="navbar navbar-expand-lg">
             <div className="container">
@@ -57,11 +67,14 @@ const Navbar = () => {
                             </>
                         )}
                         {isLoggedIn && (
-                            <li className="nav-item mx-2">
+                            <li
+                                className="nav-item mx-2"
+                                onClick={logout}
+                            >
                                 <Link
                                     className="nav-link active btn-nav"
                                     aria-current="page"
-                                    to="/cerrarsesion"
+                                    to=""
                                 >Cerrar Sesión</Link>
                             </li>
                         )}
