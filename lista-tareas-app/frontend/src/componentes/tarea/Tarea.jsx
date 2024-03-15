@@ -1,26 +1,61 @@
 import './../../estilos/tarea.css';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from "axios";
 import TareaCartas from './TareaCartas';
 import Update from './Update';
 import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store";
 import React, { useState } from 'react';
 
+
+//let id = sessionStorage.getItem('id');
+
 const Tarea = () => {
+    const dispatch = useDispatch();
     const [input, setInput] = useState({titulo: "", estado: false});
     const [Array, setArray] = useState([]);
+
     const change = (e) => {
         const { name, value } = e.target;
         setInput({ ...input, [name]: value });
     }
-    const submit = () => {
+    const submit = async () => {
         if ( !input.titulo ) {
             toast.error('El titulo no se ingreso');
         } else {
-            setArray([...Array, input]);
-            setInput({titulo: "", estado: false});
-            toast.success('La tarea se agrego');
-            toast.warning('La tarea no se guardo ! Por favor Registrarse');
+            const id = sessionStorage.getItem('id');
+            if ( id ) {
+                await axios
+                    .post(`http://localhost:3001/api/v2/agregarTarea`, {
+                        titulo: input.titulo,
+                        estado: input.estado,
+                        id: id
+                    })
+                    .then((response) => {
+                        const { message, err } = response.data;
+
+                        if ( err ) {
+                            toast.warning(message);
+                            dispatch(authActions.logout());
+                        } else {
+                            toast.success('La tarea se agrego');
+                        }
+                    })
+                    .catch(err => {
+                        const { status, data } = err.response;
+                        if ( status === 500 ) {
+                            toast.error(data.message);
+                        }
+                    });
+            } else {
+                setArray([...Array, input]);
+                toast.success('La tarea se agrego');
+                toast.warning('La tarea no se guardo ! Por favor Registrarse');
+                dispatch(authActions.logout());
+            }
         }
+        setInput({titulo: '', estado: false});
     }
     const updateState = (id) => {
         const titulo = Array[id].titulo;
@@ -39,6 +74,7 @@ const Tarea = () => {
     const dis = (value) => {
         document.getElementById("task-update").style.display = value;
     };
+
     return (
         <>
             <div className='task'>
