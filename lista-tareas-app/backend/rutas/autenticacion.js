@@ -75,11 +75,11 @@ ruta.post('/acceso', async (req, res) => {
 
         if ( !correoFrm ) {
             return res.status(400).json({
-                message: 'El correo electrónico esta vació'
+                message: 'El correo electrónico no se ingreso'
             });
         } else if ( !contraseniaFrm ) {
             return res.status(400).json({
-                message: 'La contraseña esta vacía'
+                message: 'La contraseña no se ingreso'
             });
         }
 
