@@ -7,34 +7,27 @@ const ruta = express.Router();
 // AGREGAR TAREA
 ruta.post('/agregarTarea', async (req, res) => {
     try {
-        const { titulo, correo } = req.body;
+        const { titulo, estado, id } = req.body;
 
-        if ( !titulo ) {
-            return res.status(400).json({
-                message: 'El titulo esta vació'
-            });
-        } else if ( !correo ) {
-            return res.status(400).json({
-                message: 'El correo electrónico esta vació'
-            });
-        }
-
-        const existeUsuario = await Usuario.findOne({ correo });
+        const existeUsuario =
+            await Usuario.findById(id)
+                .catch((err) => console.error(err.message));
 
         if ( !existeUsuario ) {
-            return res.status(400).json({
-                message: 'El usuario no existe'
+            return res.status(200).json({
+                message: 'El usuario no esta registrado',
+                err: true
             });
         } else {
-            const lista = new Lista({ titulo, estado: false, usuario: existeUsuario });
-            await lista.save().then(() => res.status(200).json({ lista }));
+            const lista = new Lista({ titulo, estado, usuario: existeUsuario });
+            await lista.save().then(() => res.status(200).json({ lista, err: false }));
             existeUsuario.lista.push(lista);
             existeUsuario.save();
         }
     } catch(err) {
         console.error(err);
 
-        return res.status(400).json({
+        return res.status(500).json({
             message: 'Ocurrió un error al agregar una tarea'
         });
     }
