@@ -15,9 +15,8 @@ const Registrarse = () => {
     }
     const submit = async (e) => {
         e.preventDefault();
-        // en el hosting en el metodo post se incluye: ${window.location.origin}
         await axios
-            .post(`http://localhost:3001/api/v1/registrar`, Inputs)
+            .post(`${window.location.origin}/api/v1/registrar`, Inputs)
             .then((response) => {
                 toast.success(response.data.message);
                 setInputs({correo: '', nombreUsuario: '', contrasenia: ''});

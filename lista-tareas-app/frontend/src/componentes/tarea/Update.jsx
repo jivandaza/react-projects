@@ -22,9 +22,10 @@ const Update = ({ display, update }) => {
     const submit = async () => {
         if ( !Input.titulo ) {
             toast.error('El titulo no se ingreso');
+
         } else {
             await axios
-                .put(`http://localhost:3001/api/v2/editarTarea/${update._id}`, Input)
+                .put(`${window.location.origin}/api/v2/editarTarea/${update._id}`, Input)
                 .then((response) => {
                     toast.info(response.data.message);
                     display("none");

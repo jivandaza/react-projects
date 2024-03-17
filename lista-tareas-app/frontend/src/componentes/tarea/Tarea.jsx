@@ -24,11 +24,13 @@ const Tarea = () => {
     const submit = async () => {
         if ( !input.titulo ) {
             toast.error('El titulo no se ingreso');
+
         } else {
             const id = sessionStorage.getItem('id');
+
             if ( id ) {
                 await axios
-                    .post(`http://localhost:3001/api/v2/agregarTarea`, {
+                    .post(`${window.location.origin}/api/v2/agregarTarea`, {
                         titulo: input.titulo,
                         estado: input.estado,
                         id: id
@@ -50,6 +52,7 @@ const Tarea = () => {
                             toast.error(data.message);
                         }
                     });
+
             } else {
                 setArray([input, ...Array]);
                 toast.success('La tarea se agrego');
@@ -74,7 +77,7 @@ const Tarea = () => {
 
         if ( id ) {
             await axios
-                .put(`http://localhost:3001/api/v2/cambiarEstadoTarea/${cardId}`, {
+                .put(`${window.location.origin}/api/v2/cambiarEstadoTarea/${cardId}`, {
                     id: id
                 })
                 .then((response) => {
@@ -103,7 +106,7 @@ const Tarea = () => {
 
         if ( id ) {
             await axios
-                .delete(`http://localhost:3001/api/v2/removerTarea/${cardId}`, {
+                .delete(`${window.location.origin}/api/v2/removerTarea/${cardId}`, {
                     data: { id: id }
                 })
                 .then(() => {
@@ -131,10 +134,11 @@ const Tarea = () => {
 
     useEffect(() => {
         const id = sessionStorage.getItem('id');
+
         if ( id ) {
             const fetch = async () => {
                 await axios
-                    .get(`http://localhost:3001/api/v2/obtenerTareas/${id}`)
+                    .get(`${window.location.origin}/api/v2/obtenerTareas/${id}`)
                     .then((response) => {
                         const { message, err } = response.data;
 
@@ -156,6 +160,7 @@ const Tarea = () => {
                     });
             };
             fetch();
+
         } else{
             dispatch(authActions.logout());
             sessionStorage.clear('id');

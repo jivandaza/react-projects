@@ -18,9 +18,8 @@ const Acceso = () => {
     }
     const submit = async (e) => {
         e.preventDefault();
-        // en el hosting en el metodo post se incluye: ${window.location.origin}
         await axios
-            .post(`http://localhost:3001/api/v1/acceso`, Inputs)
+            .post(`${window.location.origin}/api/v1/acceso`, Inputs)
             .then((response) => {
                 const { message, err, user } = response.data;
 
