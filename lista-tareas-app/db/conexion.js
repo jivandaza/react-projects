@@ -10,9 +10,7 @@ const conn = async (req, res) => {
                     console.log('Conexión establecida a la base de datos');
                 });
     } catch (err) {
-        res.status(400).json({
-           message: 'Conexión no establecida a la base de datos'
-        });
+        console.log('Conexión no establecida a la base de datos');
     }
 }
 
