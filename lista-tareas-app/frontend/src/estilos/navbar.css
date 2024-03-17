@@ -11,3 +11,15 @@
     color: white !important;
     font-weight: bold;
 }
+.btn-nav:hover {
+    opacity: .7;
+}
+.link-hover {
+    transition: all 300ms ease;
+}
+.link-hover:hover {
+    color: rgba(240, 0, 0, 0.87) !important;
+    text-decoration: underline;
+    text-underline-offset: 1rem;
+    text-decoration-color: rgba(240, 0, 0, 0.87);
+}
