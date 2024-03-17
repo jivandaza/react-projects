@@ -15,7 +15,7 @@ ruta.post('/agregarTarea', async (req, res) => {
 
         if ( !existeUsuario ) {
             return res.status(200).json({
-                message: 'El usuario no esta registrado',
+                message: 'La sesión ha finalizado...',
                 err: true
             });
         } else {
@@ -36,30 +36,12 @@ ruta.post('/agregarTarea', async (req, res) => {
 // EDITAR TAREA
 ruta.put('/editarTarea/:id', async (req, res) => {
    try {
-       const { titulo, correo } = req.body;
+       const { titulo } = req.body;
 
-       if ( !titulo ) {
-           return res.status(400).json({
-               message: 'El titulo esta vació'
-           });
-       } else if ( !correo ) {
-           return res.status(400).json({
-               message: 'El correo electrónico esta vació'
-           });
-       }
-
-       const existeUsuario = await Usuario.findOne({ correo });
-
-       if ( !existeUsuario ) {
-           return res.status(400).json({
-               message: 'El usuario no existe'
-           });
-       } else {
-           const lista = await Lista.findByIdAndUpdate(req.params.id, { titulo });
-           lista.save().then(() => res.status(200).json({
-               message: 'La tarea se ha editado'
-           }));
-       }
+       const lista = await Lista.findByIdAndUpdate(req.params.id, { titulo });
+       lista.save().then(() => res.status(200).json({
+           message: 'La tarea se edito'
+       }));
    } catch (err) {
        console.error(err);
 
@@ -129,7 +111,7 @@ ruta.get('/obtenerTareas/:id', async (req, res) => {
 
         if ( !existeUsuario ) {
             return res.status(200).json({
-                message: 'Se ha cerrado la sesión...',
+                message: 'La sesión ha finalizado...',
                 err: true
             });
         } else {

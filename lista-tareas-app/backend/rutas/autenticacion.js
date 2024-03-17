@@ -107,7 +107,7 @@ ruta.post('/acceso', async (req, res) => {
         const { contrasenia, ...others } = usuario._doc;
         return res.status(200).json({
             user: others,
-            message: 'Iniciando sesión...',
+            message: 'La sesión ha iniciado...',
             err: false
         });
     } catch (err) {
