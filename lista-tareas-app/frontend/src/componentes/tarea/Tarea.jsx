@@ -5,9 +5,11 @@ import TareaCartas from './TareaCartas';
 import Update from './Update';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { authActions } from "../../store";
 import React, { useState, useEffect } from 'react';
+
+let toUpdateArray = [];
 
 const Tarea = () => {
     const history = useNavigate();
@@ -35,11 +37,11 @@ const Tarea = () => {
                         const { message, err } = response.data;
 
                         if ( err ) {
-                            toast.warning(message);
+                            toast.info(message);
                             dispatch(authActions.logout());
                             sessionStorage.clear('id');
                         } else {
-                            toast.success('La tarea se agrego y guardo');
+                            toast.success('La tarea se agrego');
                         }
                     })
                     .catch(err => {
@@ -51,10 +53,21 @@ const Tarea = () => {
             } else {
                 setArray([input, ...Array]);
                 toast.success('La tarea se agrego');
-                toast.warning('La tarea no se guardo ! Primero debe Registrarse o Acceder');
+                toast.warning('Por favor, debe Registrarse o Acceder');
             }
         }
         setInput({titulo: '', estado: false});
+    }
+    const editTask = (value) => {
+        const id = sessionStorage.getItem('id');
+
+        if ( id ) {
+            toUpdateArray = Array[value];
+
+        } else {
+            toast.warning('Por favor, debe Registrarse o Acceder');
+            dis('none');
+        }
     }
     const updateState = async (cardId) => {
         const id = sessionStorage.getItem('id');
@@ -80,7 +93,7 @@ const Tarea = () => {
             const message =
                 Array[cardId].estado ? 'La tarea no se realizo' : 'La tarea se realizo';
             toast.info(message);
-            toast.warning(`${message} ! Primero debe Registrarse o Acceder`);
+            toast.warning(`Por favor, debe Registrarse o Acceder`);
             Array[cardId].estado = !Array[cardId].estado;
             setArray([...Array]);
         }
@@ -96,7 +109,7 @@ const Tarea = () => {
                 .then(() => {
                     Array.splice(cardId, 1);
                     setArray([...Array]);
-                    toast.error("La tarea se removió y elimino");
+                    toast.error("La tarea se removió");
                 })
                 .catch(err => {
                     const { status, data } = err.response;
@@ -107,7 +120,7 @@ const Tarea = () => {
 
         } else {
             toast.error('La tarea se removió')
-            toast.warning('La tarea no se elimino ! Primero debe Registrarse o Acceder');
+            toast.warning('Por favor, debe Registrarse o Acceder');
             Array.splice(cardId, 1);
             setArray([...Array]);
         }
@@ -126,9 +139,10 @@ const Tarea = () => {
                         const { message, err } = response.data;
 
                         if ( err ) {
-                            toast.warning(message);
+                            toast.info(message);
                             dispatch(authActions.logout());
                             sessionStorage.clear('id');
+                            setArray([]);
                             setTimeout(() => history('/acceso'), 3000);
                         } else {
                             setArray(response.data.lista);
@@ -183,6 +197,8 @@ const Tarea = () => {
                                         stateCard={updateState}
                                         removeCard={removeTask}
                                         display={dis}
+                                        updateId={index}
+                                        toBeUpdate={editTask}
                                     />
                                 </div>
                             ))}
@@ -192,7 +208,10 @@ const Tarea = () => {
             </div>
             <div className="task-update " id="task-update">
                 <div className="container update">
-                    <Update display={dis} />
+                    <Update
+                        display={dis}
+                        update={toUpdateArray}
+                    />
                 </div>
             </div>
         </>

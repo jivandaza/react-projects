@@ -8,7 +8,9 @@ const TareaCartas = ({
     id,
     stateCard,
     removeCard,
-    display
+    display,
+    updateId,
+    toBeUpdate
 }) => {
     return (
         <div className='p-3 task-card'>
@@ -26,6 +28,7 @@ const TareaCartas = ({
                         className='d-flex justify-content-center align-items-center card-icon-head px-2 py-1'
                         onClick={() => {
                             display('block');
+                            toBeUpdate(updateId);
                         }}
                     >
                         <FaRegEdit className='card-icons' /> Editar
