@@ -1,5 +1,4 @@
 import Home from './pages/Home';
-import About from './pages/About';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import BookingCar from './pages/BookingCar';
@@ -11,7 +10,6 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path='/' exact element={<Home />} />
-                    <Route path='/about' exact element={<About />} />
                     <Route path='/register' exact element={<Register />} />
                     <Route path='/login' exact element={<Login />} />
                     <Route path='/bookingCar' exact element={<BookingCar />} />
