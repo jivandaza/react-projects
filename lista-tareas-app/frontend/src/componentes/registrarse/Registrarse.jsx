@@ -42,7 +42,7 @@ const Registrarse = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-8 vh-100 d-flex justify-content-center align-items-center">
-                        <div className='d-flex flex-column w-50'>
+                        <div className='d-flex flex-column'>
                             <input
                                 className='p-2 mb-3 input-signup'
                                 type='email'

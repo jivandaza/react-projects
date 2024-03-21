@@ -176,7 +176,7 @@ const Tarea = () => {
                         <input
                             type='text'
                             placeholder='Titulo'
-                            className='task-input p-2 w-100 text-center'
+                            className='task-input p-2 text-center'
                             name='titulo'
                             value={input.titulo}
                             onChange={change}

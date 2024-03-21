@@ -8,7 +8,10 @@
     opacity: .8;
 }
 .input-signup {
+    width: 300px;
     outline: none;
+    border: 1px solid #808080FF;
+    border-radius: 5px;
 }
 .btn-signup {
     background: transparent;
