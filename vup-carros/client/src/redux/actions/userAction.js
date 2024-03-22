@@ -16,9 +16,12 @@ export const userLogin = (reqObj) => async dispatch => {
         } else {
             localStorage.setItem('user', JSON.stringify(user));
             message.success(msg);
-        }
 
-        dispatch({ type: 'LOADING', payload: false });
+            setTimeout(() => {
+                window.location.href = '/';
+                dispatch({ type: 'LOADING', payload: false });
+            },3000);
+        }
     } catch (error) {
         console.log(error.message);
 
@@ -40,8 +43,11 @@ export const userRegister = (reqObj) => async dispatch => {
             message.warning(msg);
 
         } else {
-            localStorage.setItem('user', JSON.stringify(user));
             message.success(msg);
+
+            setTimeout(() => {
+                window.location.href = '/login';
+            },3000);
         }
 
         dispatch({ type: 'LOADING', payload: false });
