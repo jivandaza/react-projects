@@ -19,9 +19,12 @@ export const userLogin = (reqObj) => async dispatch => {
 
             setTimeout(() => {
                 window.location.href = '/';
-                dispatch({ type: 'LOADING', payload: false });
             },3000);
         }
+
+        setTimeout(() => {
+            dispatch({ type: 'LOADING', payload: false });
+        },2000);
     } catch (error) {
         console.log(error.message);
 

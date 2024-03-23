@@ -1,0 +1,44 @@
+.booking-img {
+    height: 400px;
+    width: 500px;
+    border-radius: 10px;
+    margin: auto;
+}
+.divider span {
+    font-size: 25px;
+}
+.divider::after {
+    background-color: #6d6d6d;
+}
+.divider::before {
+    background-color: #6d6d6d;
+}
+.booking-info {
+    font-size: 20px;
+}
+.car-details p {
+    text-align: right;
+}
+.ant-picker {
+    color: orangered;
+    border-color: orangered;
+}
+.ant-picker:hover {
+    color: orangered;
+    border-color: orangered;
+}
+.ant-picker:focus:hover {
+    border-color: orangered !important;
+}
+.ant-picker-range-separator svg {
+    color: orangered;
+}
+.ant-picker-active-bar {
+    background: orangered !important;
+}
+.ant-picker-suffix span {
+    color: orangered;
+}
+.ant-picker-clear span {
+    color: orangered;
+}

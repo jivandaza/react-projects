@@ -1,7 +1,7 @@
 import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
-import BookingCar from './pages/BookingCar';
+import Booking from './pages/Booking';
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
 function App() {
@@ -9,12 +9,10 @@ function App() {
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' exact element={<ProtectedRoute />} >
-                        <Route path='/' exact element={<Home />} />
-                    </Route>
-                    <Route path='/register' exact element={<Register />} />
-                    <Route path='/login' exact element={<Login />} />
-                    <Route path='/bookingCar' exact element={<BookingCar />} />
+                    <Route path='/' exact element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
+                    <Route path='/register' exact element={isAuthenticated ? <Register /> : <Navigate to="/" />} />
+                    <Route path='/login' exact element={isAuthenticated ? <Login /> : <Navigate to="/" />} />
+                    <Route path='/booking/:carid' exact element={isAuthenticated ? <Booking /> : <Navigate to="/login" />} />
                 </Routes>
             </BrowserRouter>
         </div>
@@ -30,4 +28,8 @@ export function ProtectedRoute({ element, ...rest }) {
     ) : (
         <Navigate to="/login" replace />
     );
+}
+
+export function isAuthenticated() {
+    return !!localStorage.getItem('user');
 }

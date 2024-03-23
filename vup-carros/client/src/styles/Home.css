@@ -24,10 +24,14 @@
     transition: 0.3s;
 }
 .btn1 {
-    box-shadow: none !important;
-    background-color: white !important;
-    color: orangered !important;
-    border: 1px solid orangered !important;
+    box-shadow: none;
+    background-color: white;
+    color: orangered;
+    border: 1px solid orangered;
+}
+.btn1 a {
+    text-decoration: none;
+    color: inherit;
 }
 p {
     margin: 5px !important;

@@ -5,7 +5,6 @@ import React from 'react';
 
 const DefaultLayout = ({ children }) => {
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
 
     return (
         <div>
@@ -38,7 +37,7 @@ const items = [
     {
         key: '1',
         label: (
-            <a href='/'>
+            <a href='/' style={{textDecoration: "none"}}>
                 Home
             </a>
         ),
@@ -46,7 +45,7 @@ const items = [
     {
         key: '2',
         label: (
-            <a href="/bookingCar">
+            <a href="/" style={{textDecoration: "none"}}>
                 Booking
             </a>
         ),
@@ -54,7 +53,7 @@ const items = [
     {
         key: '3',
         label: (
-            <a href="https://www.luohanacademy.com">
+            <a href="" style={{textDecoration: "none"}}>
                 Profile
             </a>
         ),
