@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {message} from "antd";
 
 export const getAllCars = () => async dispatch => {
     dispatch({ type: 'LOADING', payload: true });
@@ -12,6 +13,7 @@ export const getAllCars = () => async dispatch => {
     } catch (error) {
         console.log(error.message);
 
+        message.error('Something went wrong, please try latter');
         dispatch({ type: 'LOADING', payload: false });
     }
 }

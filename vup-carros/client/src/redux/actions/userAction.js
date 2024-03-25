@@ -28,7 +28,7 @@ export const userLogin = (reqObj) => async dispatch => {
     } catch (error) {
         console.log(error.message);
 
-        message.error('Something went wrong');
+        message.error('Something went wrong, please try latter');
         dispatch({ type: 'LOADING', payload: false });
     }
 }
@@ -57,7 +57,7 @@ export const userRegister = (reqObj) => async dispatch => {
     } catch (error) {
         console.log(error.message);
 
-        message.error('Something went wrong');
+        message.error('Something went wrong, please try latter');
         dispatch({ type: 'LOADING', payload: false });
     }
 }

@@ -4,8 +4,9 @@
     border-radius: 10px;
     margin: auto;
 }
+
 .divider span {
-    font-size: 25px;
+    font-size: 20px;
 }
 .divider::after {
     background-color: #6d6d6d;
@@ -13,12 +14,15 @@
 .divider::before {
     background-color: #6d6d6d;
 }
+
 .booking-info {
-    font-size: 20px;
-}
-.car-details p {
+    font-size: 15px;
     text-align: right;
 }
+.booking-info p {
+    text-align: right;
+}
+
 .ant-picker {
     color: orangered;
     border-color: orangered;
@@ -27,7 +31,10 @@
     color: orangered;
     border-color: orangered;
 }
-.ant-picker:focus:hover {
+.ant-picker-input input::placeholder {
+    color: orangered !important;
+}
+.ant-picker:focus-within {
     border-color: orangered !important;
 }
 .ant-picker-range-separator svg {
@@ -41,4 +48,14 @@
 }
 .ant-picker-clear span {
     color: orangered;
+}
+
+.ant-checkbox span {
+    border-color: orangered !important;
+}
+.ant-checkbox.ant-checkbox-checked span {
+    background-color: orangered !important;
+}
+.ant-checkbox-wrapper > span:nth-child(2) {
+    font-size: 15px;
 }

@@ -1,6 +1,7 @@
 import './db/connection.js';
 import carRoute from "./routes/carRoute.js";
 import userRoute from "./routes/userRoute.js";
+import bookingRoute from "./routes/bookingRoute.js";
 import cors from 'cors';
 import express from 'express';
 
@@ -12,6 +13,7 @@ app.use(cors());
 
 app.use('/api/car', carRoute);
 app.use('/api/user', userRoute);
+app.use('/api/booking', bookingRoute);
 
 app.listen(port, () => {
     console.log(`Server started on: http://localhost:${port}/`)
