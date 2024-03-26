@@ -6,13 +6,10 @@ const route = express.Router();
 // ADD CAR
 route.post('/addCar', async (req, res) => {
     try {
-        console.log(req.body);
-        const { name, image, rentPerHour, fuelType, capacity } = req.body;
+        const newCar = new Car(req.body);
 
-        const car = new Car({  name, image, rentPerHour, fuelType, capacity });
-
-        await car.save();
-        res.status(200).json({message: 'Added cart'});
+        await newCar.save();
+        res.send('Car added successfully');
     } catch(err) {
         console.error(err);
 

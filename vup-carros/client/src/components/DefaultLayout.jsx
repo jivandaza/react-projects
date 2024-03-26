@@ -2,6 +2,7 @@ import './../styles/DefaultLayout.css';
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Row, Col } from 'antd';
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const DefaultLayout = ({ children }) => {
     const user = JSON.parse(localStorage.getItem('user'));
@@ -12,7 +13,7 @@ const DefaultLayout = ({ children }) => {
                 <Row gutter={16} justify='center'>
                     <Col lg={20} sm={24} xs={24}>
                         <div className="d-flex justify-content-between">
-                            <h1>VUP Cars</h1>
+                            <h1><Link to='/'>VUP Cars</Link></h1>
 
                             <Dropdown
                                 menu={{
@@ -45,8 +46,8 @@ const items = [
     {
         key: '2',
         label: (
-            <a href="/" style={{textDecoration: "none"}}>
-                Booking
+            <a href="/mybookings" style={{textDecoration: "none"}}>
+                My Bookings
             </a>
         ),
     },
@@ -62,12 +63,11 @@ const items = [
         key: '4',
         danger: true,
         label: (
-            <li onClick={() => {
+            <a href='/login' style={{textDecoration: "none"}} onClick={() => {
                 localStorage.removeItem('user');
-                window.location.href = '/login';
             }}>
                 Logout
-            </li>
+            </a>
         ),
     }
 ];

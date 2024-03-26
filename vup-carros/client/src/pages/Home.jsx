@@ -69,8 +69,8 @@ const Home = () => {
 
             <Row justify='center' gutter={16}>
                 {totalCars.map((car, index) => {
-                    return <Col lg={5} sm={24} xs={24}>
-                        <div className='car p-2 bs1' key={index}>
+                    return <Col lg={5} sm={24} xs={24} key={index}>
+                        <div className='car p-2 bs1'>
                             <img
                                 src={car.image}
                                 className='car-img'

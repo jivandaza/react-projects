@@ -2,6 +2,8 @@ import Home from './pages/Home';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Booking from './pages/Booking';
+import UserBookings from './pages/UserBookings';
+import AddCar from './pages/AddCar';
 import { Route, Routes, BrowserRouter, Navigate } from 'react-router-dom';
 
 function App() {
@@ -13,6 +15,8 @@ function App() {
                     <Route path='/register' exact element={isAuthenticated ? <Register /> : <Navigate to="/" />} />
                     <Route path='/login' exact element={isAuthenticated ? <Login /> : <Navigate to="/" />} />
                     <Route path='/booking/:carid' exact element={isAuthenticated ? <Booking /> : <Navigate to="/login" />} />
+                    <Route path='/mybookings' exact element={isAuthenticated ? <UserBookings /> : <Navigate to="/login" />} />
+                    <Route path='/addcar' exact element={isAuthenticated ? <AddCar /> : <Navigate to="/login" />} />
                 </Routes>
             </BrowserRouter>
         </div>

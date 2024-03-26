@@ -40,7 +40,7 @@ export const userRegister = (reqObj) => async dispatch => {
         const url_api = 'http://localhost:3001/api/user/register';
         const response = await axios.post(url_api, reqObj);
 
-        const { err, msg, user } = response.data;
+        const { err, msg } = response.data;
 
         if ( err ) {
             message.warning(msg);

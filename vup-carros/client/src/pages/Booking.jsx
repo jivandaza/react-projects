@@ -98,7 +98,7 @@ const Booking = () => {
                 <Col lg={10} sm={24} xs={24} align='center'>
                     <img
                         src={car.image}
-                        alt={`Image of ${car.name}`}
+                        alt={car.name}
                         className='booking-img img-fluid bs1'
                     />
                 </Col>

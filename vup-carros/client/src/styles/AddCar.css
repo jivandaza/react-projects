@@ -1,0 +1,18 @@
+.frmAddCar input:focus {
+    border-color: #4cd964;
+}
+.frmAddCar input:hover {
+    border-color: #4cd964;
+}
+.frmAddCar input:focus-visible {
+    border-color: #4cd964;
+}
+.ant-input-number:focus {
+    border-color: #4cd964;
+}
+.ant-input-number:hover {
+    border-color: #4cd964;
+}
+.ant-input-number:focus:not(:hover) {
+    border-color: #4cd964 !important;
+}
