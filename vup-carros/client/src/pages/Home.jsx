@@ -27,29 +27,41 @@ const Home = () => {
     }, [cars]);
 
     function setFilter(values) {
-        let temp = [];
-        let selectedFrom = moment(values[0].$d, 'MMM DD YYYY HH:mm');
-        let selectedTo = moment(values[1].$d, 'MMM DD YYYY HH:mm');
+        if ( values ) {
+            let temp = [];
+            let selectedFrom = moment(values[0].$d, 'MMM DD YYYY HH:mm');
+            let selectedTo = moment(values[1].$d, 'MMM DD YYYY HH:mm');
+            let carsAdded = new Set();
 
-        for(let car of cars) {
-            if (car.bookedTimeSlots.length === 0) {
-                temp.push(car);
-            } else {
-                for(let booking of car.bookedTimeSlots) {
-                    if (selectedFrom.isBetween(booking.from, booking.to) ||
-                        selectedTo.isBetween(booking.from, booking.to) ||
-                        moment(booking.from).isBetween(booking.from, booking.to) ||
-                        moment(booking.to).isBetween(booking.from, booking.to)
-                    ) {
-
-                    } else {
+            for (let car of cars) {
+                if (!car.bookedTimeSlots.length) {
+                    temp.push(car);
+                    carsAdded.add(car.id);
+                } else {
+                    let shouldAddCar = true;
+                    for (let booking of car.bookedTimeSlots) {
+                        if (
+                            selectedFrom.isBetween(booking.from, booking.to) ||
+                            selectedTo.isBetween(booking.from, booking.to) ||
+                            moment(booking.from).isBetween(selectedFrom, selectedTo) ||
+                            moment(booking.to).isBetween(selectedFrom, selectedTo)
+                        ) {
+                            shouldAddCar = false;
+                            break;
+                        }
+                    }
+                    if (shouldAddCar && !carsAdded.has(car.id)) {
                         temp.push(car);
+                        carsAdded.add(car.id);
                     }
                 }
             }
-        }
 
-        setTotalCars(temp);
+            setTotalCars(temp);
+
+        } else {
+            setTotalCars(cars);
+        }
     }
 
     return (
@@ -69,7 +81,7 @@ const Home = () => {
 
             <Row justify='center' gutter={16}>
                 {totalCars.map((car, index) => {
-                    return <Col lg={5} sm={24} xs={24} key={index}>
+                    return <Col lg={5} sm={24} xs={20} key={index}>
                         <div className='car p-2 bs1'>
                             <img
                                 src={car.image}
@@ -80,7 +92,7 @@ const Home = () => {
                             <div className="car-content d-flex justify-content-between align-items-center">
                                 <div>
                                     <p>{car.name}</p>
-                                    <p>{car.rentPerHour} Rent Per Hour /-</p>
+                                    <p>Rent Per Hour {car.rentPerHour} /-</p>
                                 </div>
                                 <div>
                                     <button className='btn1 mr-2'><Link to={`/booking/${car._id}`}>Book Now</Link></button>

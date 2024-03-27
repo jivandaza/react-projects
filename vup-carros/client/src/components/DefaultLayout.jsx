@@ -30,6 +30,10 @@ const DefaultLayout = ({ children }) => {
             <div className="content">
                 {children}
             </div>
+            <div className="footer bs1">
+                <p className='text-center p-2'>Designed and Developer by</p>
+                <p className='text-center pb-1'>VUP Cars & Jivandaza</p>
+            </div>
         </div>
     );
 }
@@ -46,7 +50,7 @@ const items = [
     {
         key: '2',
         label: (
-            <a href="/mybookings" style={{textDecoration: "none"}}>
+            <a href='/mybookings' style={{textDecoration: "none"}}>
                 My Bookings
             </a>
         ),
@@ -54,8 +58,8 @@ const items = [
     {
         key: '3',
         label: (
-            <a href="" style={{textDecoration: "none"}}>
-                Profile
+            <a href='/admin' style={{textDecoration: "none"}}>
+                Panel Admin
             </a>
         ),
     },

@@ -8,7 +8,7 @@ export const bookCar = (reqObj) => async dispatch => {
         if ( reqObj.totalAmount === 0 ) {
             message.warning('Required select time intervals');
         } else {
-            const url_api = 'http://localhost:3001/api/booking/bookCar';
+            const url_api = `${window.location.origin}/api/booking/bookCar`;
             await axios.post(url_api, reqObj);
 
             message.success('You car booked successfully');
@@ -31,7 +31,7 @@ export const getAllBookings = () => async dispatch => {
     dispatch({ type: 'LOADING', payload: true });
 
     try {
-        const url_api = 'http://localhost:3001/api/booking/getAllBookings';
+        const url_api = `${window.location.origin}/api/booking/getAllBookings`;
         const response = await axios.get(url_api);
 
         dispatch({ type: 'GET_ALL_BOOKINGS', payload: response.data });

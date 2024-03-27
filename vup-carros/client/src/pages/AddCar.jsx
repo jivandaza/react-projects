@@ -5,6 +5,8 @@ import DefaultLayout from '../components/DefaultLayout';
 import Spinner from '../components/Spinner';
 import { useDispatch, useSelector } from "react-redux";
 import { addCar } from "../redux/actions/carsAction";
+import { LeftOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const AddCar = () => {
 
@@ -21,12 +23,19 @@ const AddCar = () => {
         <DefaultLayout>
             {loading && (<Spinner />)}
             <Row justify='center my-5'>
-                <Col lg={12} sm={24}>
+                <Col lg={12} sm={24} xs={20}>
                     <Form
                         layout='vertical'
                         className='bs1 p-4 frmAddCar'
                         onFinish={onFinish}
                     >
+                        <Link to='/admin'>
+                            <LeftOutlined style={{
+                                color: 'orangered',
+                                fontSize: 20,
+                                fontWeight: 'bold'
+                            }} />
+                        </Link>
                         <h1 className='text-center'>Add New Car</h1>
                         <hr />
 

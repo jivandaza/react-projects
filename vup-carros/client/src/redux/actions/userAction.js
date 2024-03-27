@@ -5,7 +5,7 @@ export const userLogin = (reqObj) => async dispatch => {
     dispatch({ type: 'LOADING', payload: true });
 
     try {
-        const url_api = 'http://localhost:3001/api/user/login';
+        const url_api = `${window.location.origin}/api/user/login`;
         const response = await axios.post(url_api, reqObj);
 
         const { err, msg, user } = response.data;
@@ -37,7 +37,7 @@ export const userRegister = (reqObj) => async dispatch => {
     dispatch({ type: 'LOADING', payload: true });
 
     try {
-        const url_api = 'http://localhost:3001/api/user/register';
+        const url_api = `${window.location.origin}/api/user/register`;
         const response = await axios.post(url_api, reqObj);
 
         const { err, msg } = response.data;

@@ -29,9 +29,9 @@ const UserBookings = () => {
                 <h1 className='mt-4'>My Bookings</h1>
             </Row>
             <Row justify='center' gutter={16}>
-                <Col lg={20} sm={24}>
+                <Col lg={20} sm={24} xs={20}>
                     {bookings.filter(o => o.user === user._id).map((booking) => {
-                        return <Row className='booking-cart bs1 mt-4 d-flex align-items-center' gutter={16}>
+                        return <Row className='booking-cart bs1 my-4 d-flex align-items-center' gutter={16}>
                             <Col lg={7} sm={24}>
                                 <p><b>{booking.car.name}</b></p>
                                 <p>Total Hours: <b>{booking.totalHours}</b></p>
