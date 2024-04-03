@@ -1,7 +1,7 @@
 import './../styles/DefaultLayout.css';
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Row, Col } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 
 const DefaultLayout = ({ children }) => {
