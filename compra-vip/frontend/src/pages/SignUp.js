@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import toastr from 'toastr';
 import loginIcon from "../assest/signin.gif";
 import imageTobase64 from '../helpers/imageTobase64';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import summaryApi from '../common/index.js';
 
 const SignUp = () => {
 
@@ -15,6 +17,8 @@ const SignUp = () => {
         confirmPassword: '',
         profilePic: ''
     });
+
+    const navigate = useNavigate();
 
     const handleOneChange = (e) => {
         const { name, value } = e.target;
@@ -30,20 +34,45 @@ const SignUp = () => {
     const handleUploadPic = async (e) => {
         const file = e.target.files[0];
 
-        const imagePic = await imageTobase64(file);
+        if ( file) {
+            const imagePic = await imageTobase64(file);
 
-        setData((preve) => {
-            return {
-                ...preve,
-                profilePic: imagePic
-            }
-        })
+            setData((preve) => {
+                return {
+                    ...preve,
+                    profilePic: imagePic
+                }
+            });
+        }
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // code
+        if ( data.password === data.confirmPassword ) {
+            const req = await fetch(summaryApi.signUp.url, {
+                method: summaryApi.signUp.method,
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            const res = await req.json();
+
+            if ( res.existUser ) {
+                toastr.warning(res.message);
+            } else if ( res.error ) {
+                toastr.error(res.message);
+            }
+
+            if (res.success) {
+                toastr.success(res.message);
+                setTimeout(() => navigate('/acceder'), 1000);
+            }
+        } else {
+            toastr.warning('Las contraseñas no coinciden');
+        }
     }
 
     return (
@@ -55,7 +84,7 @@ const SignUp = () => {
                         boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)'
                     }}
                 >
-                    <div className='w-20 h-20 mx-auto mb-6 relative overflow-hiddern'>
+                    <div className='w-20 h-20 mx-auto mb-6 relative overflow-hiddern hover:scale-110 transition-all'>
                         <div className='rounded-full'>
                             <img src={data.profilePic || loginIcon} alt='icono de acceder' className='rounded-full w-full h-20' />
                         </div>
@@ -76,9 +105,9 @@ const SignUp = () => {
                                     type='text'
                                     id='name'
                                     name='name'
-                                    onChange={handleOneChange}
                                     value={data.name}
                                     placeholder='Ingrese su nombre'
+                                    onChange={handleOneChange}
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                             </div>
@@ -90,9 +119,9 @@ const SignUp = () => {
                                     type='email'
                                     id='email'
                                     name='email'
-                                    onChange={handleOneChange}
                                     value={data.email}
                                     placeholder='Ingrese su correo electrónico'
+                                    onChange={handleOneChange}
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                             </div>
@@ -104,9 +133,9 @@ const SignUp = () => {
                                     type={showPassword ? 'text' : 'password'}
                                     id='password'
                                     name='password'
-                                    onChange={handleOneChange}
                                     value={data.password}
                                     placeholder='Ingrese su contraseña'
+                                    onChange={handleOneChange}
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                                 <div className='cursor-pointer text-xl' onClick={
@@ -125,9 +154,9 @@ const SignUp = () => {
                                     type={showConfirmPassword ? 'text' : 'password'}
                                     id='confirmPassword'
                                     name='confirmPassword'
-                                    onChange={handleOneChange}
                                     value={data.confirmPassword}
                                     placeholder='Confirme su contraseña'
+                                    onChange={handleOneChange}
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                                 <div className='cursor-pointer text-xl' onClick={

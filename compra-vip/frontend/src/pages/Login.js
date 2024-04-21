@@ -26,7 +26,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('login ...')
+        console.log('login...')
         // code
     }
 
@@ -50,9 +50,10 @@ const Login = () => {
                                     type='email'
                                     id='email'
                                     name='email'
-                                    onChange={handleOneChange}
                                     value={data.email}
                                     placeholder='Ingresar correo electrónico'
+                                    onChange={handleOneChange}
+                                    required
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                             </div>
@@ -64,9 +65,10 @@ const Login = () => {
                                     type={showPassword ? 'text' : 'password'}
                                     id='password'
                                     name='password'
-                                    onChange={handleOneChange}
                                     value={data.password}
                                     placeholder='Ingresar contraseña'
+                                    onChange={handleOneChange}
+                                    required
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                                 <div className='cursor-pointer text-xl' onClick={
