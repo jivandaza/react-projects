@@ -50,7 +50,7 @@ const SignUp = () => {
         e.preventDefault();
 
         if ( data.password === data.confirmPassword ) {
-            const req = await fetch(summaryApi.signUp.url, {
+            const dataRequest = await fetch(summaryApi.signUp.url, {
                 method: summaryApi.signUp.method,
                 headers: {
                     'content-type': 'application/json'
@@ -58,17 +58,17 @@ const SignUp = () => {
                 body: JSON.stringify(data)
             });
 
-            const res = await req.json();
+            const { existUser, message, error, success } = await dataRequest.json();
 
-            if ( res.existUser ) {
-                toastr.warning(res.message);
-            } else if ( res.error ) {
-                toastr.error(res.message);
+            if ( existUser ) {
+                toastr.warning(message);
+            } else if ( error ) {
+                toastr.error(message);
             }
 
-            if (res.success) {
-                toastr.success(res.message);
-                setTimeout(() => navigate('/acceder'), 1000);
+            if ( success ) {
+                toastr.success(message);
+                setTimeout(() => navigate('/acceder'), 3000);
             }
         } else {
             toastr.warning('Las contraseñas no coinciden');

@@ -11,7 +11,10 @@ const app = express();
 const port = 3001 || process.env.PORT;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
+}));
 app.use(cookieParser(0));
 app.use('/api', router);
 

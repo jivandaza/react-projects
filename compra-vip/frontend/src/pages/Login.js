@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import loginIcon from '../assest/signin.gif';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaEye } from 'react-icons/fa';
 import { FaEyeSlash } from 'react-icons/fa';
+import toastr from "toastr";
+import summaryApi from '../common/index.js';
+import Context from '../context/index';
 
 const Login = () => {
 
@@ -11,6 +14,9 @@ const Login = () => {
         email: '',
         password: ''
     });
+
+    const navigate = useNavigate();
+    const { fetchUserDetails } = useContext(Context);
 
     const handleOneChange = (e) => {
         const { name, value } = e.target;
@@ -23,11 +29,33 @@ const Login = () => {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log('login...')
-        // code
+        const dataRequest = await fetch(summaryApi.signIn.url, {
+            method: summaryApi.signIn.method,
+            credentials: 'include',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const { failLogin, message, error, success } = await dataRequest.json();
+
+        if ( failLogin ) {
+            toastr.warning(message);
+        } else if ( error ) {
+            toastr.error(message);
+        }
+
+        if ( success ) {
+            toastr.success(message);
+            setTimeout(() => {
+                fetchUserDetails();
+                navigate('/');
+            }, 3000);
+        }
     }
 
     return (
@@ -53,7 +81,6 @@ const Login = () => {
                                     value={data.email}
                                     placeholder='Ingresar correo electrónico'
                                     onChange={handleOneChange}
-                                    required
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                             </div>
@@ -68,7 +95,6 @@ const Login = () => {
                                     value={data.password}
                                     placeholder='Ingresar contraseña'
                                     onChange={handleOneChange}
-                                    required
                                     className='w-full h-full outline-none bg-transparent'
                                 />
                                 <div className='cursor-pointer text-xl' onClick={
