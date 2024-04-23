@@ -1,4 +1,4 @@
-import UserModel from './../models/userModel.js';
+import UserModel from './../../models/userModel.js';
 
 const userDetailsController = async (req, res) => {
     try {
@@ -11,7 +11,7 @@ const userDetailsController = async (req, res) => {
             message : "Detalles del usuario..."
         });
     } catch (err) {
-        console.error('Error en Detalles de Usuario: ', err);
+        console.error('Error en Detalles de Usuario: ', err.message || err);
         res.clearCookie('token');
 
         res.status(500).json({

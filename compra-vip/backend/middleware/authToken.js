@@ -24,7 +24,7 @@ const authToken = async (req, res, next) => {
         const status = err.failAuth ? 200 : 500;
 
         if ( !err.failAuth ) {
-            console.error('Error en Autenticación: ', err);
+            console.error('Error en Autenticación: ', err.message || err);
             res.clearCookie('token');
         }
 

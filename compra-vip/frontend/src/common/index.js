@@ -16,6 +16,14 @@ const summaryApi = {
     logout: {
         url: `${backendDomain}/api/usuario/salir`,
         method: 'get'
+    },
+    allUsers: {
+        url: `${backendDomain}/api/admin/usuarios`,
+        method: 'get'
+    },
+    updateUser: {
+        url: `${backendDomain}/api/admin/actualizar-usuario`,
+        method: 'put'
     }
 }
 
