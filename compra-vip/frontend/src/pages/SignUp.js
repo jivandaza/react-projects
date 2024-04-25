@@ -34,7 +34,7 @@ const SignUp = () => {
     const handleUploadPic = async (e) => {
         const file = e.target.files[0];
 
-        if ( file) {
+        if ( file ) {
             const imagePic = await imageTobase64(file);
 
             setData((preve) => {

@@ -42,7 +42,7 @@ const AllUsers = () => {
         <div className='bg-white pb-4'>
             <table className='w-full userTable'>
                 <thead>
-                    <tr>
+                    <tr className='bg-red-600 text-white'>
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Correo Electrónico</th>
@@ -63,7 +63,7 @@ const AllUsers = () => {
                                     <td>{moment(item?.createdAt).format('LL')}</td>
                                     <td className='py-1'>
                                         <button
-                                            className='bg-green-100 p-2 rounded-full hover:bg-green-500 hover:text-white'
+                                            className='bg-cyan-100 p-2 rounded-full hover:bg-cyan-500 hover:text-white'
                                             onClick={() => {
                                                 setUpdateUser(item);
                                                 setShowChangeRole(true);

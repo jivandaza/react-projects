@@ -34,11 +34,11 @@ const router = createBrowserRouter([
                 element: <AdminPanel />,
                 children: [
                     {
-                        path: 'users',
+                        path: 'usuarios',
                         element: <AllUsers />
                     },
                     {
-                        path: 'products',
+                        path: 'productos',
                         element: <AllProducts />
                     }
                 ]

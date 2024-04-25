@@ -5,6 +5,7 @@ import { GrSearch } from 'react-icons/gr';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useDispatch, useSelector } from "react-redux";
+import ROLE from './../common/role';
 import summaryApi from "../common";
 import toastr from "toastr";
 import { setUserDetails } from "../store/userSlice";
@@ -59,31 +60,39 @@ const Header = () => {
                     </div>
                     <div className='flex items-center gap-7'>
                         <div className='relative flex justify-center'>
-                            <div
-                                className='text-3xl relative cursor-pointer flex justify-center'
-                                onClick={() => setMenuDisplay(prev => !prev)}
-                            >
-                                {
-                                    user?.profilePic
-                                        ?   <img
-                                            src={user?.profilePic}
-                                            alt={user?.name}
-                                            className='w-10 h-10 rounded-full'
-                                        />
-                                        :   <FaRegCircleUser />
-                                }
-                            </div>
                             {
-                                menuDisplay && (
+                                user?._id && (
+                                    <div
+                                        className={`${user?.role === ROLE.ADMIN ? 'cursor-pointer' : ''} text-3xl relative flex justify-center`}
+                                        onClick={() => setMenuDisplay(prev => !prev)}
+                                    >
+                                        {
+                                            user?.profilePic
+                                                ?   <img
+                                                    src={user?.profilePic}
+                                                    alt={user?.name}
+                                                    className='w-10 h-10 rounded-full'
+                                                />
+                                                :   <FaRegCircleUser />
+                                        }
+                                    </div>
+                                )
+                            }
+                            {
+                                user?.role === ROLE.ADMIN && menuDisplay && (
                                     <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lh rounded'>
                                         <nav>
-                                            <Link
-                                                to='/admin-panel'
-                                                className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'
-                                                onClick={() => setMenuDisplay(false)}
-                                            >
-                                                Admin Panel
-                                            </Link>
+                                            {
+                                                user?.role === ROLE.ADMIN && (
+                                                    <Link
+                                                        to='/admin-panel/productos'
+                                                        className='whitespace-nowrap hidden md:block hover:bg-slate-100 p-2'
+                                                        onClick={() => setMenuDisplay(false)}
+                                                    >
+                                                        Admin Panel
+                                                    </Link>
+                                                )
+                                            }
                                         </nav>
                                     </div>
                                 )

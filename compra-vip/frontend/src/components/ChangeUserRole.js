@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { IoMdClose } from 'react-icons/io';
 import ROLE from './../common/role';
 import summaryApi from "../common";
 import toastr from "toastr";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Context from "../context";
 
 const ChangeUserRole = ({
     name,
@@ -14,6 +17,10 @@ const ChangeUserRole = ({
 }) => {
 
     const [userRole, setUserRole] = useState(role);
+
+    const user = useSelector(state => state?.user?.user);
+    const navigation = useNavigate();
+    const { fetchUserDetails } = useContext(Context);
 
     const handleSelectRole = (e) => {
         setUserRole(e.target.value);
@@ -43,22 +50,32 @@ const ChangeUserRole = ({
         }
 
         if ( success ) {
-            toastr.success(message);
-            setTimeout(() => {
+            if (role === userRole) {
+                onClose();
+            } else {
+                toastr.info(message);
                 onClose();
                 callFunc();
-            }, 3000);
+                setTimeout(() => {
+                    if ( user?._id === userId && userRole === ROLE.GENERAL ) {
+                        fetchUserDetails();
+                        navigation('/');
+                    }
+                }, 3000);
+            }
         }
     }
 
     return (
         <div className='fixed top-0 bottom-0 left-0 right-0 w-full h-full z-10 flex justify-between items-center'>
-            <div className='mx-auto bg-white shadow-md p-4 w-full max-w-sm'>
-                <button className='block ml-auto' onClick={onClose}>
-                    <IoMdClose />
-                </button>
+            <div className='mx-auto bg-white rounded shadow-md p-4 w-full max-w-sm'>
+                <div className='relative flex items-center mb-4'>
+                    <h1 className='w-full text-lg font-medium text-center'>Actualizar Rol</h1>
+                    <button className='absolute right-0 p-0.5 text-red-600 text-lg rounded-full hover:bg-red-600 hover:text-white' onClick={onClose}>
+                        <IoMdClose />
+                    </button>
+                </div>
 
-                <h1 className='pb-4 text-lg font-medium text-center'>Actualizar Rol</h1>
                 <p className='mb-1'>Nombre: {name}</p>
                 <p className='mb-4'>Correo Electrónico: {email}</p>
 
