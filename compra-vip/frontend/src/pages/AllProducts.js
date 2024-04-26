@@ -1,9 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import AdminProductCard from './../components/AdminProductCard';
 import UploadProduct from './../components/UploadProduct';
+import summaryApi from "../common";
+import toastr from "toastr";
 
 const AllProducts = () => {
 
     const [showUploadProduct, setShowUploadProduct] = useState(false);
+    const [allProducts, setAllProducts] = useState([]);
+
+    const fetchAllProducts = async () => {
+        const dataResponse = await fetch(summaryApi.allProducts.url, {
+            method: summaryApi.allProducts.method,
+            credentials: 'include'
+        });
+
+        const { message, data, error, success } = await dataResponse.json();
+
+        if ( error ) {
+            toastr.error(message);
+        }
+
+        if ( success ) {
+            setAllProducts(data);
+        }
+    };
+
+    useEffect( ()  => {
+        fetchAllProducts();
+    }, []);
 
     return (
         <div>
@@ -15,10 +40,25 @@ const AllProducts = () => {
                 >Subir Producto</button>
             </div>
 
+            <div className='flex items-center flex-wrap gap-5 py-4 h-[calc(80vh-85px)] overflow-y-scroll'>
+                {
+                    allProducts.map((item, index) => {
+                        return (
+                            <AdminProductCard
+                                data={item}
+                                key={'product'+index}
+                                allProducts={fetchAllProducts}
+                            />
+                        )
+                    })
+                }
+            </div>
+
             {
                 showUploadProduct && (
                     <UploadProduct
                         onClose={() => setShowUploadProduct(false)}
+                        allProducts={fetchAllProducts}
                     />
                 )
             }

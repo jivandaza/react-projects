@@ -5,7 +5,10 @@ import userSignInController from './../controller/user/userSignIn.js';
 import userDetailsController from './../controller/user/userDetails.js';
 import userLogoutController from "../controller/user/userLogout.js";
 import allUsersController from "../controller/admin/allUsers.js";
-import updateUserRole from "../controller/admin/updateUserRole.js";
+import updateUserRoleController from "../controller/admin/updateUserRole.js";
+import uploadProductController from "../controller/product/uploadProduct.js";
+import getProductsController from "../controller/product/getProducts.js";
+import updateProductController from "../controller/product/updateProduct.js";
 
 const router = express.Router();
 
@@ -17,6 +20,11 @@ router.get('/usuario/salir', userLogoutController);
 
 //  admin panel
 router.get('/admin/usuarios', authToken, allUsersController);
-router.put('/admin/actualizar-usuario', authToken, updateUserRole);
+router.put('/admin/actualizar-usuario', authToken, updateUserRoleController);
+
+// product
+router.post('/producto/subir', authToken, uploadProductController);
+router.get('/producto/lista', authToken, getProductsController);
+router.put('/producto/editar', authToken, updateProductController);
 
 export default router;

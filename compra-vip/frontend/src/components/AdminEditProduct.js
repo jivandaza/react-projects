@@ -1,26 +1,28 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { IoMdClose } from "react-icons/io";
-import { FaCloudUploadAlt } from 'react-icons/fa';
+import productCategory from "../helpers/productCategory";
+import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import DisplayImage from './DisplayImage';
-import productCategory from './../helpers/productCategory';
+import DisplayImage from "./DisplayImage";
 import uploadImage from "../helpers/uploadImage";
 import summaryApi from "../common";
 import toastr from "toastr";
 
-const UploadProduct = ({
+const AdminEditProduct = ({
     onClose,
+    dataProduct,
     allProducts
 }) => {
 
     const [data, setData] = useState({
-        name: '',
-        brand: '',
-        category: '',
-        image: [],
-        description: '',
-        price: '',
-        sellingPrice: ''
+        _id: dataProduct?._id,
+        name: dataProduct?.name,
+        brand: dataProduct?.brand,
+        category: dataProduct?.category,
+        image: dataProduct?.image || [],
+        description: dataProduct?.description,
+        price: dataProduct?.price,
+        sellingPrice: dataProduct?.sellingPrice
     });
     const [showFullScreenImage,setShowFullScreenImage] = useState(false);
     const [fullScreenImage,setFullScreenImage] = useState('');
@@ -64,12 +66,12 @@ const UploadProduct = ({
             }
         });
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dataResponse = await fetch(summaryApi.uploadProduct.url, {
-            method: summaryApi.uploadProduct.method,
+        const dataResponse = await fetch(summaryApi.updateProduct.url, {
+            method: summaryApi.updateProduct.method,
             credentials: 'include',
             headers: {
                 'content-type': 'application/json'
@@ -79,15 +81,17 @@ const UploadProduct = ({
 
         const { message, error, success } = await dataResponse.json();
 
+        console.log(data._id);
+
         if ( error ) {
             toastr.error(message);
         }
 
         if ( success ) {
             toastr.success(message);
+            allProducts();
             setTimeout(() => {
                 onClose();
-                allProducts();
             }, 3000);
         }
     };
@@ -96,7 +100,7 @@ const UploadProduct = ({
         <div className='fixed w-full h-full bg-slate-200 bg-opacity-35 top-0 letf-0 right-0 bottom-0 flex justify-center items-center'>
             <div className='bg-white p-4 shadow-md rounded w-full max-w-2xl h-full max-h-[80%] overflow-hidden pb-12'>
                 <div className='relative flex items-center py-2'>
-                    <h1 className='w-full text-lg font-medium text-center'>Subir Producto</h1>
+                    <h1 className='w-full text-lg font-medium text-center'>Editar Producto</h1>
                     <button className='absolute right-0 p-0.5 text-red-600 text-lg rounded-full hover:bg-red-600 hover:text-white' onClick={onClose}>
                         <IoMdClose />
                     </button>
@@ -267,4 +271,4 @@ const UploadProduct = ({
     )
 };
 
-export default UploadProduct;
+export default AdminEditProduct;
