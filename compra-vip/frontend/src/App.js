@@ -16,21 +16,17 @@ function App() {
     const dispatch = useDispatch();
 
     const fetchUserDetails = async () => {
-        const dataRequest = await fetch(summaryApi.currentUser.url, {
+        const dataResponse = await fetch(summaryApi.currentUser.url, {
             method: summaryApi.currentUser.method,
             credentials: 'include'
         });
 
-        const { failAuth, error, message, success, data } = await dataRequest.json();
+        const { failAuth, error, message, success, data } = await dataResponse.json();
 
-        if ( failAuth ) {
+        if ( failAuth || error ) {
             toastr.info(message);
-            setTimeout(() => navigate('/acceder'), 3000);
-        }
-
-        if ( error ) {
-            toastr.error(message);
-            setTimeout(() => navigate('/acceder'), 3000);
+            dispatch(setUserDetails(null));
+            setTimeout(() => navigate('/'), 3000);
         }
 
         if ( success ) {

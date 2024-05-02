@@ -5,6 +5,9 @@ import moment from 'moment';
 import 'moment/locale/es';
 import { MdModeEdit } from 'react-icons/md';
 import summaryApi from '../common/index.js';
+import { setUserDetails } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const AllUsers = () => {
 
@@ -17,20 +20,25 @@ const AllUsers = () => {
         _id: ''
     });
 
+    const navigation = useNavigate();
+    const dispatch = useDispatch();
+
     const fetchAllUsers = async () => {
-        const dataRequest = await fetch(summaryApi.allUsers.url, {
+        const dataResponse = await fetch(summaryApi.allUsers.url, {
             method: summaryApi.allUsers.method,
             credentials: 'include'
         });
 
-        const { success, error, message, data } = await dataRequest.json();
+        const { success, error, message, data } = await dataResponse.json();
 
         if ( success ) {
             setAllUsers(data);
         }
 
         if ( error ) {
-            toastr.error(message);
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            setTimeout(() => navigation('/'), 3000);
         }
     }
 
@@ -63,7 +71,8 @@ const AllUsers = () => {
                                     <td>{moment(item?.createdAt).format('LL')}</td>
                                     <td className='py-1'>
                                         <button
-                                            className='bg-cyan-100 p-2 rounded-full hover:bg-cyan-500 hover:text-white'
+                                            className='
+'
                                             onClick={() => {
                                                 setUpdateUser(item);
                                                 setShowChangeRole(true);

@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { setUserDetails } from "../store/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import AdminProductCard from './../components/AdminProductCard';
 import UploadProduct from './../components/UploadProduct';
 import summaryApi from "../common";
@@ -9,20 +12,25 @@ const AllProducts = () => {
     const [showUploadProduct, setShowUploadProduct] = useState(false);
     const [allProducts, setAllProducts] = useState([]);
 
+    const navigation = useNavigate();
+    const dispatch = useDispatch();
+
     const fetchAllProducts = async () => {
         const dataResponse = await fetch(summaryApi.allProducts.url, {
             method: summaryApi.allProducts.method,
             credentials: 'include'
         });
 
-        const { message, data, error, success } = await dataResponse.json();
-
-        if ( error ) {
-            toastr.error(message);
-        }
+        const { data, message, success, error } = await dataResponse.json();
 
         if ( success ) {
             setAllProducts(data);
+        }
+
+        if ( error ) {
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            setTimeout(() => navigation('/'), 3000);
         }
     };
 

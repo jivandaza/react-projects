@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import summaryApi from '../common/index.js';
 import toastr from 'toastr';
 import loginIcon from "../assest/signin.gif";
 import imageTobase64 from '../helpers/imageTobase64';
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
-import summaryApi from '../common/index.js';
 
 const SignUp = () => {
 
@@ -18,7 +19,8 @@ const SignUp = () => {
         profilePic: ''
     });
 
-    const navigate = useNavigate();
+    const user = useSelector(state => state?.user?.user);
+    const navigation = useNavigate();
 
     const handleOneChange = (e) => {
         const { name, value } = e.target;
@@ -50,7 +52,7 @@ const SignUp = () => {
         e.preventDefault();
 
         if ( data.password === data.confirmPassword ) {
-            const dataRequest = await fetch(summaryApi.signUp.url, {
+            const dataResponse = await fetch(summaryApi.signUp.url, {
                 method: summaryApi.signUp.method,
                 headers: {
                     'content-type': 'application/json'
@@ -58,7 +60,7 @@ const SignUp = () => {
                 body: JSON.stringify(data)
             });
 
-            const { existUser, message, error, success } = await dataRequest.json();
+            const { existUser, message, success, error } = await dataResponse.json();
 
             if ( existUser ) {
                 toastr.warning(message);
@@ -68,12 +70,18 @@ const SignUp = () => {
 
             if ( success ) {
                 toastr.success(message);
-                setTimeout(() => navigate('/acceder'), 3000);
+                setTimeout(() => navigation('/acceder'), 3000);
             }
         } else {
             toastr.warning('Las contraseñas no coinciden');
         }
     }
+
+    useEffect(() => {
+        if ( user ) {
+            navigation(-1);
+        }
+    }, [user, navigation ]);
 
     return (
         <section id='signup'>

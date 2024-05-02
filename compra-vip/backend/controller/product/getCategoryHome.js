@@ -1,23 +1,24 @@
 import ProductModel from './../../models/productModel.js';
 
-const getProducts = async (req, res) => {
+const getCategoryHome = async (req, res) => {
     try {
-        const dataAllProducts = await ProductModel.find().sort({createdAt: -1});
+        const { category } = req?.body || req?.query;
+        const data = ProductModel.find({category});
 
         res.status(201).json({
+            data,
             message: 'OK',
-            error: false,
             success: true,
-            data: dataAllProducts
-        });
+            error: false
+        })
     } catch (err) {
+        console.log(err.message || err);
         res.status(400).json({
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,
-            data: []
         });
     }
-};
+}
 
-export default getProducts;
+export default getCategoryHome;

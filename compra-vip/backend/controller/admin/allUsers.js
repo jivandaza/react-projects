@@ -5,7 +5,7 @@ const allUsersController = async (req, res) => {
         const data = await UserModel.find();
 
         res.json({
-            message : "Usuarios obtenidos...",
+            message : "OK",
             data,
             success : true,
             error : false

@@ -12,7 +12,9 @@ const authToken = async (req, res, next) => {
 
          jwt.verify(token, process.env.TOKEN_SECRET_KEY, function (err, decoded){
              if( err ){
-                 console.log("Error auth: ", err);
+                 throw {
+                     failAuth: true
+                 };
              }
 
              req.userId = decoded?._id;
@@ -20,7 +22,7 @@ const authToken = async (req, res, next) => {
              next();
         });
     } catch (err) {
-        const message = err.failAuth ? 'Por favor, inicie sesión...' : 'Se ha producido un error, intenta más tarde';
+        const message = err.failAuth ? 'Por favor, iniciar sesión' : 'Se ha producido un error, intenta más tarde';
         const status = err.failAuth ? 200 : 500;
 
         if ( !err.failAuth ) {

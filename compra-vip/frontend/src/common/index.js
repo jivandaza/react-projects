@@ -36,6 +36,14 @@ const summaryApi = {
     updateProduct: {
         url: `${backendDomain}/api/producto/editar`,
         method: 'put'
+    },
+    categoryProduct: {
+        url: `${backendDomain}/api/producto/categorias`,
+        method: 'get'
+    },
+    categoryProductHome: {
+        url: `${backendDomain}/api/producto/categorias-inicio`,
+        method: 'get'
     }
 }
 

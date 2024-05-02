@@ -1,10 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setUserDetails } from "../store/userSlice";
 import ROLE from './../common/role';
 import summaryApi from "../common";
 import toastr from "toastr";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Context from "../context";
 
 const ChangeUserRole = ({
@@ -19,8 +20,9 @@ const ChangeUserRole = ({
     const [userRole, setUserRole] = useState(role);
 
     const user = useSelector(state => state?.user?.user);
-    const navigation = useNavigate();
     const { fetchUserDetails } = useContext(Context);
+    const navigation = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSelectRole = (e) => {
         setUserRole(e.target.value);
@@ -29,7 +31,7 @@ const ChangeUserRole = ({
     const fetchUpdateUserRole = async (e) => {
         e.preventDefault();
 
-        const dataRequest = await fetch(summaryApi.updateUser.url, {
+        const dataResponse = await fetch(summaryApi.updateUser.url, {
             method: summaryApi.updateUser.method,
             credentials: 'include',
             headers: {
@@ -43,11 +45,7 @@ const ChangeUserRole = ({
             })
         });
 
-        const { message, error, success } = await dataRequest.json();
-
-        if ( error ) {
-            toastr.error(message);
-        }
+        const { message, success, error } = await dataResponse.json();
 
         if ( success ) {
             if (role === userRole) {
@@ -63,6 +61,12 @@ const ChangeUserRole = ({
                     }
                 }, 3000);
             }
+        }
+
+        if ( error ) {
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            setTimeout(() => navigation('/'), 3000);
         }
     }
 

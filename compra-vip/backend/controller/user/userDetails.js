@@ -8,7 +8,7 @@ const userDetailsController = async (req, res) => {
             data : user,
             error : false,
             success : true,
-            message : "Detalles del usuario..."
+            message : "OK"
         });
     } catch (err) {
         console.error('Error en Detalles de Usuario: ', err.message || err);

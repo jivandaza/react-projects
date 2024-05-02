@@ -13,7 +13,7 @@ const updateUserRoleController = async (req, res) => {
         await UserModel.findByIdAndUpdate(userId, payload);
 
         res.json({
-            message: 'El rol se actualizo...',
+            message: 'Se Actualizo el Rol',
             success: true,
             error: false
         })

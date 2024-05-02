@@ -1,12 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
-import productCategory from "../helpers/productCategory";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../store/userSlice";
 import DisplayImage from "./DisplayImage";
 import uploadImage from "../helpers/uploadImage";
+import productCategory from "../helpers/productCategory";
 import summaryApi from "../common";
 import toastr from "toastr";
+
 
 const AdminEditProduct = ({
     onClose,
@@ -24,8 +28,12 @@ const AdminEditProduct = ({
         price: dataProduct?.price,
         sellingPrice: dataProduct?.sellingPrice
     });
+
     const [showFullScreenImage,setShowFullScreenImage] = useState(false);
     const [fullScreenImage,setFullScreenImage] = useState('');
+
+    const navigation = useNavigate();
+    const dispatch = useDispatch();
 
     const handleOneChange = (e) => {
         const { name, value } = e.target;
@@ -79,13 +87,7 @@ const AdminEditProduct = ({
             body: JSON.stringify(data)
         });
 
-        const { message, error, success } = await dataResponse.json();
-
-        console.log(data._id);
-
-        if ( error ) {
-            toastr.error(message);
-        }
+        const { message, success, error } = await dataResponse.json();
 
         if ( success ) {
             toastr.success(message);
@@ -93,6 +95,12 @@ const AdminEditProduct = ({
             setTimeout(() => {
                 onClose();
             }, 3000);
+        }
+
+        if ( error ) {
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            setTimeout(() => navigation('/'), 3000);
         }
     };
 

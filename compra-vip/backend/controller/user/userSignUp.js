@@ -58,7 +58,7 @@ async function userSignUpController(req, res) {
             data: saveUser,
             success: true,
             error: false,
-            message: 'Registrado exitosamente'
+            message: 'Usuario Registrado'
         });
     } catch (err) {
         const message = err.errClient ? err.message : 'Se ha producido un error, intenta más tarde';

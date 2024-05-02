@@ -3,7 +3,7 @@ const userLogoutController = async (req, res) => {
         res.clearCookie('token');
 
         res.json({
-            message: 'Cerrando sesión...',
+            message: 'Cerrando la Sesión',
             error: false,
             success: true,
             data: []

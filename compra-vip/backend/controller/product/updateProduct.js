@@ -89,7 +89,7 @@ const updateProduct = async (req, res) => {
         const updateProduct = await ProductModel.findByIdAndUpdate(_id, resBody);
 
         res.status(200).json({
-            message: 'Se han guardado los cambios...',
+            message: 'Se Guardaron los Cambios',
             success: true,
             error: false
         });

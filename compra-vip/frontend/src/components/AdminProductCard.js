@@ -33,8 +33,11 @@ const AdminProductCard = ({
                         }
                     </p>
 
-                    <div className='w-fit ml-auto bg-cyan-500 text-white p-2 rounded-full hover:bg-cyan-400 hover:text-white cursor-pointer'>
-                        <MdModeEditOutline onClick={() => setShowEditProduct(true)} />
+                    <div
+                        className='w-fit ml-auto bg-cyan-500 text-white p-2 rounded-full hover:bg-cyan-400 hover:text-white cursor-pointer'
+                        onClick={() => setShowEditProduct(true)}
+                    >
+                        <MdModeEditOutline />
                     </div>
                 </div>
             </div>

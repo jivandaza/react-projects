@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { IoMdClose } from "react-icons/io";
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "../store/userSlice";
 import DisplayImage from './DisplayImage';
 import productCategory from './../helpers/productCategory';
 import uploadImage from "../helpers/uploadImage";
@@ -25,6 +28,9 @@ const UploadProduct = ({
     const [showFullScreenImage,setShowFullScreenImage] = useState(false);
     const [fullScreenImage,setFullScreenImage] = useState('');
 
+    const navigation = useNavigate();
+    const dispatch = useDispatch();
+
     const handleOneChange = (e) => {
         const { name, value } = e.target;
 
@@ -41,8 +47,6 @@ const UploadProduct = ({
 
         if ( file ) {
             const uploadImageCloudinary = await uploadImage(file);
-
-            console.log(uploadImageCloudinary.url, uploadImageCloudinary);
 
             setData((preve)=> {
                 return{
@@ -77,11 +81,7 @@ const UploadProduct = ({
             body: JSON.stringify(data)
         });
 
-        const { message, error, success } = await dataResponse.json();
-
-        if ( error ) {
-            toastr.error(message);
-        }
+        const { message, success, error } = await dataResponse.json();
 
         if ( success ) {
             toastr.success(message);
@@ -89,6 +89,12 @@ const UploadProduct = ({
                 onClose();
                 allProducts();
             }, 3000);
+        }
+
+        if ( error ) {
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            setTimeout(() => navigation('/'), 3000);
         }
     };
 

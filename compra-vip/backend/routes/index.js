@@ -9,6 +9,8 @@ import updateUserRoleController from "../controller/admin/updateUserRole.js";
 import uploadProductController from "../controller/product/uploadProduct.js";
 import getProductsController from "../controller/product/getProducts.js";
 import updateProductController from "../controller/product/updateProduct.js";
+import getCategoryController from "../controller/product/getCategory.js";
+import getCategoryHomeController from "../controller/product/getCategoryHome.js";
 
 const router = express.Router();
 
@@ -26,5 +28,7 @@ router.put('/admin/actualizar-usuario', authToken, updateUserRoleController);
 router.post('/producto/subir', authToken, uploadProductController);
 router.get('/producto/lista', authToken, getProductsController);
 router.put('/producto/editar', authToken, updateProductController);
+router.get('/producto/categorias', authToken, getCategoryController);
+router.get('/producto/categorias-inicio', authToken, getCategoryHomeController);
 
 export default router;

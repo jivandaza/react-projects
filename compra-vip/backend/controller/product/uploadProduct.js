@@ -88,7 +88,7 @@ const uploadProduct = async (req, res) =>{
         const saveProduct = await product.save();
 
         res.status(201).json({
-            message : "Producto guardado...",
+            message : "Se Guardaron los Cambios",
             error : false,
             success : true,
             data : saveProduct
