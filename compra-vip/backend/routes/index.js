@@ -10,7 +10,7 @@ import uploadProductController from "../controller/product/uploadProduct.js";
 import getProductsController from "../controller/product/getProducts.js";
 import updateProductController from "../controller/product/updateProduct.js";
 import getCategoryController from "../controller/product/getCategory.js";
-import getCategoryHomeController from "../controller/product/getCategoryHome.js";
+import getProductsByCategoryController from "../controller/product/getProductsByCategory.js";
 
 const router = express.Router();
 
@@ -26,9 +26,9 @@ router.put('/admin/actualizar-usuario', authToken, updateUserRoleController);
 
 // product
 router.post('/producto/subir', authToken, uploadProductController);
-router.get('/producto/lista', authToken, getProductsController);
+router.get('/producto/lista', getProductsController);
 router.put('/producto/editar', authToken, updateProductController);
-router.get('/producto/categorias', authToken, getCategoryController);
-router.get('/producto/categorias-inicio', authToken, getCategoryHomeController);
+router.get('/producto/categorias', getCategoryController);
+router.post('/producto/productos-categoria', getProductsByCategoryController);
 
 export default router;

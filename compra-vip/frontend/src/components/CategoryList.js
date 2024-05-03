@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { setUserDetails } from "../store/userSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import summaryApi from "../common";
 import toastr from "toastr";
 
@@ -11,9 +9,6 @@ const CategoryList = () => {
     const [loading, setLoading] = useState(false);
 
     const categoryLoading = new Array(13).fill(null);
-
-    const navigation = useNavigate();
-    const dispatch = useDispatch();
 
     const fetchCategoryProduct = async () => {
         setLoading(true);
@@ -31,8 +26,7 @@ const CategoryList = () => {
 
         if ( error ) {
             toastr.info(message);
-            dispatch(setUserDetails(null));
-            setTimeout(() => navigation('/'), 3000);
+            setCategoryProduct(data);
         }
 
         setLoading(false);

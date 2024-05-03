@@ -41,9 +41,9 @@ const summaryApi = {
         url: `${backendDomain}/api/producto/categorias`,
         method: 'get'
     },
-    categoryProductHome: {
-        url: `${backendDomain}/api/producto/categorias-inicio`,
-        method: 'get'
+    productsByCategory: {
+        url: `${backendDomain}/api/producto/productos-categoria`,
+        method: 'post'
     }
 }
 
