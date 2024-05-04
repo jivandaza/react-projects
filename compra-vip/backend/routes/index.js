@@ -11,6 +11,7 @@ import getProductsController from "../controller/product/getProducts.js";
 import updateProductController from "../controller/product/updateProduct.js";
 import getCategoryController from "../controller/product/getCategory.js";
 import getProductsByCategoryController from "../controller/product/getProductsByCategory.js";
+import getProductController from "../controller/product/getProduct.js";
 
 const router = express.Router();
 
@@ -30,5 +31,6 @@ router.get('/producto/lista', getProductsController);
 router.put('/producto/editar', authToken, updateProductController);
 router.get('/producto/categorias', getCategoryController);
 router.post('/producto/productos-categoria', getProductsByCategoryController);
+router.post('/producto/datos', getProductController);
 
 export default router;

@@ -19,9 +19,10 @@ const getCategory = async (req, res) => {
             data: productByCategory,
             error: false,
             success: true
-        })
+        });
     } catch (err) {
         console.log(err.message || err);
+
         res.status(400).json({
             message: 'Se ha producido un error, intenta más tarde',
             error: true,

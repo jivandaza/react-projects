@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import fetchProductsByCategory from "../helpers/fetchProductsByCategory";
-import toastr from "toastr";
+import { Link } from 'react-router-dom';
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { IoMdCart } from "react-icons/io";
 import displayCOPCurrency from "../helpers/displayCurrency";
-import {FaAngleLeft, FaAngleRight} from "react-icons/fa6";
+import fetchProductsByCategory from "../helpers/fetchProductsByCategory";
+import toastr from "toastr";
+import addToCart from "../helpers/addToCart";
 
 const HorizontalCardProduct = ({category, heading}) => {
 
@@ -85,7 +87,7 @@ const HorizontalCardProduct = ({category, heading}) => {
                     ) : (
                         data.map((item, index) => {
                             return (
-                                <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex' key={item.name + index}>
+                                <Link to={'product/'+item?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex' key={item.name + index}>
                                     <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px]'>
                                         <img
                                             src={item?.image[0]}
@@ -110,12 +112,15 @@ const HorizontalCardProduct = ({category, heading}) => {
                                         </div>
 
                                         <div className='flex items-center py-1'>
-                                            <button className='bg-red-600 hover:bg-red-700 text-white text-1xl px-3 py-1 rounded-full'>
+                                            <button
+                                                className='bg-red-600 hover:bg-red-700 text-white text-1xl px-3 py-1 rounded-full'
+                                                onClick={(e) => addToCart(e, item?._id)}
+                                            >
                                                 <IoMdCart />
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             )
                         })
                     )

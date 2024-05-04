@@ -44,6 +44,10 @@ const summaryApi = {
     productsByCategory: {
         url: `${backendDomain}/api/producto/productos-categoria`,
         method: 'post'
+    },
+    selectedProduct: {
+        url: `${backendDomain}/api/producto/datos`,
+        method: 'post'
     }
 }
 
