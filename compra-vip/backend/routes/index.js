@@ -12,6 +12,9 @@ import updateProductController from "../controller/product/updateProduct.js";
 import getCategoryController from "../controller/product/getCategory.js";
 import getProductsByCategoryController from "../controller/product/getProductsByCategory.js";
 import getProductController from "../controller/product/getProduct.js";
+import addToCartProductController from "../controller/cart/addToCartProduct.js";
+import countToCartProductController from "../controller/cart/countToCartProduct.js";
+import viewCartToProductsController from "../controller/cart/viewCartToProducts.js";
 
 const router = express.Router();
 
@@ -32,5 +35,10 @@ router.put('/producto/editar', authToken, updateProductController);
 router.get('/producto/categorias', getCategoryController);
 router.post('/producto/productos-categoria', getProductsByCategoryController);
 router.post('/producto/datos', getProductController);
+
+// cart product
+router.post('/carrito/agregar', authToken, addToCartProductController);
+router.get('/carrito/contar', authToken, countToCartProductController);
+router.get('/carrito/datos', authToken, viewCartToProductsController);
 
 export default router;

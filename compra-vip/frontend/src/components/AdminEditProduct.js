@@ -75,10 +75,8 @@ const AdminEditProduct = ({
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const dataResponse = await fetch(summaryApi.updateProduct.url, {
+    const fetchEditProduct = async () => {
+        const response = await fetch(summaryApi.updateProduct.url, {
             method: summaryApi.updateProduct.method,
             credentials: 'include',
             headers: {
@@ -87,21 +85,25 @@ const AdminEditProduct = ({
             body: JSON.stringify(data)
         });
 
-        const { message, success, error } = await dataResponse.json();
+        const { message, success, error } = await response.json();
 
         if ( success ) {
             toastr.success(message);
             allProducts();
-            setTimeout(() => {
-                onClose();
-            }, 3000);
+            onClose();
         }
 
         if ( error ) {
             toastr.info(message);
             dispatch(setUserDetails(null));
-            setTimeout(() => navigation('/'), 3000);
+            navigation('/');
         }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        fetchEditProduct();
     };
 
     return (

@@ -1,10 +1,11 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
-import summaryApi from "../common";
-import toastr from "toastr";
-import displayCOPCurrency from "../helpers/displayCurrency";
-import { FaStar, FaStarHalf } from "react-icons/fa";
-import {IoMdCart} from "react-icons/io";
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { IoMdCart } from 'react-icons/io';
+import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay';
+import displayCOPCurrency from '../helpers/displayCurrency';
+import summaryApi from '../common';
+import toastr from 'toastr';
 
 const ProductDetails = () => {
 
@@ -205,6 +206,15 @@ const ProductDetails = () => {
                 }
 
             </div>
+
+            {
+                !isLoading && (
+                    <CategoryWiseProductDisplay
+                        category={data?.category}
+                        heading={'Recomendar Producto'}
+                    />
+                )
+            }
         </div>
     )
 };

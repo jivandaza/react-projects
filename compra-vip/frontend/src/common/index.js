@@ -48,6 +48,18 @@ const summaryApi = {
     selectedProduct: {
         url: `${backendDomain}/api/producto/datos`,
         method: 'post'
+    },
+    addToCartProduct: {
+        url: `${backendDomain}/api/carrito/agregar`,
+        method: 'post'
+    },
+    countToCartProduct: {
+        url: `${backendDomain}/api/carrito/contar`,
+        method: 'get'
+    },
+    viewCartToProducts: {
+        url: `${backendDomain}/api/carrito/datos`,
+        method: 'get'
     }
 }
 

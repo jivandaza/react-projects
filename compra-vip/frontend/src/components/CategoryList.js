@@ -13,16 +13,15 @@ const CategoryList = () => {
     const fetchCategoryProduct = async () => {
         setLoading(true);
 
-        const dataResponse = await fetch(summaryApi.categoryProduct.url, {
+        const response = await fetch(summaryApi.categoryProduct.url, {
             method: summaryApi.categoryProduct.method,
             credentials: 'include'
         });
 
-        const { data, message, success, error } = await dataResponse.json();
+        const { data, message, success, error } = await response.json();
 
-        if ( success ) {
+        if ( success )
             setCategoryProduct(data);
-        }
 
         if ( error ) {
             toastr.info(message);

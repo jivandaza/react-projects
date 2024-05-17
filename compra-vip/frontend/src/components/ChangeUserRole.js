@@ -20,7 +20,7 @@ const ChangeUserRole = ({
     const [userRole, setUserRole] = useState(role);
 
     const user = useSelector(state => state?.user?.user);
-    const { fetchUserDetails } = useContext(Context);
+    const { fetchUserData } = useContext(Context);
     const navigation = useNavigate();
     const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ const ChangeUserRole = ({
                 callFunc();
                 setTimeout(() => {
                     if ( user?._id === userId && userRole === ROLE.GENERAL ) {
-                        fetchUserDetails();
+                        fetchUserData();
                         navigation('/');
                     }
                 }, 3000);

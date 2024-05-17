@@ -10,9 +10,8 @@ const AdminPanel = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
-        if ( user?.role !== ROLE.ADMIN ) {
+        if ( user?.role !== ROLE.ADMIN )
             navigation('/');
-        }
     }, [user]);
 
     return (

@@ -10,16 +10,15 @@ const AllProducts = () => {
     const [allProducts, setAllProducts] = useState([]);
 
     const fetchAllProducts = async () => {
-        const dataResponse = await fetch(summaryApi.allProducts.url, {
+        const response = await fetch(summaryApi.allProducts.url, {
             method: summaryApi.allProducts.method,
             credentials: 'include'
         });
 
-        const { data, message, success, error } = await dataResponse.json();
+        const { data, message, success, error } = await response.json();
 
-        if ( success ) {
+        if ( success )
             setAllProducts(data);
-        }
 
         if ( error ) {
             toastr.info(message);

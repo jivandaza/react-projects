@@ -5,12 +5,12 @@ const uploadImage = async (image) => {
     formData.append('file', image);
     formData.append('upload_preset', 'mern_product');
 
-    const dataResponse = await fetch(urlAPI, {
+    const reponse = await fetch(urlAPI, {
         method: 'post',
         body: formData
     });
 
-    return dataResponse.json();
+    return reponse.json();
 };
 
 export default uploadImage;

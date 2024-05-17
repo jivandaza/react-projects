@@ -18,7 +18,7 @@ const Login = () => {
 
     const user = useSelector(state => state?.user?.user);
     const navigation = useNavigate();
-    const { fetchUserDetails } = useContext(Context);
+    const { fetchUserData, fetchCartCountToUser } = useContext(Context);
 
     const handleOneChange = (e) => {
         const { name, value } = e.target;
@@ -29,12 +29,12 @@ const Login = () => {
                 [name]: value
             }
         })
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dataResponse = await fetch(summaryApi.signIn.url, {
+        const response = await fetch(summaryApi.signIn.url, {
             method: summaryApi.signIn.method,
             credentials: 'include',
             headers: {
@@ -43,21 +43,19 @@ const Login = () => {
             body: JSON.stringify(data)
         });
 
-        const { message, success, failLogin, error } = await dataResponse.json();
-
-        if ( failLogin ) {
-            toastr.warning(message);
-        } else if ( error ) {
-            toastr.error(message);
-        }
+        const { message, success, failLogin, error } = await response.json();
 
         if ( success ) {
             toastr.info(message);
-            setTimeout(() => {
-                fetchUserDetails();
-                navigation('/');
-            }, 3000);
+            fetchUserData();
+            fetchCartCountToUser();
+            navigation('/');
         }
+
+        if ( failLogin )
+            toastr.warning(message);
+        else if ( error )
+            toastr.error(message);
     }
 
     useEffect(() => {

@@ -1,7 +1,7 @@
 import summaryApi from "../common";
 
 const fetchProductsByCategory = async (category) => {
-    const dataResponse = await fetch(summaryApi.productsByCategory.url,{
+    const response = await fetch(summaryApi.productsByCategory.url,{
         method: summaryApi.productsByCategory.method,
         headers: {
             'content-type': 'application/json'
@@ -11,9 +11,9 @@ const fetchProductsByCategory = async (category) => {
         })
     });
 
-    const response = await dataResponse.json()
+    const data = await response.json()
 
-    return response;
+    return data;
 };
 
 export default fetchProductsByCategory;

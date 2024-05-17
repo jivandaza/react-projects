@@ -24,21 +24,20 @@ const AllUsers = () => {
     const dispatch = useDispatch();
 
     const fetchAllUsers = async () => {
-        const dataResponse = await fetch(summaryApi.allUsers.url, {
+        const response = await fetch(summaryApi.allUsers.url, {
             method: summaryApi.allUsers.method,
             credentials: 'include'
         });
 
-        const { success, error, message, data } = await dataResponse.json();
+        const { data, message, success, error } = await response.json();
 
-        if ( success ) {
+        if ( success )
             setAllUsers(data);
-        }
 
         if ( error ) {
             toastr.info(message);
             dispatch(setUserDetails(null));
-            setTimeout(() => navigation('/'), 3000);
+            navigation('/');
         }
     }
 

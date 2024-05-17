@@ -1,9 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import fetchProductsByCategory from "../helpers/fetchProductsByCategory";
-import toastr from "toastr";
-import { IoMdCart } from "react-icons/io";
-import displayCOPCurrency from "../helpers/displayCurrency";
-import {FaAngleLeft, FaAngleRight} from "react-icons/fa6";
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import { Link } from 'react-router-dom';
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
+import { IoMdCart } from 'react-icons/io';
+import fetchProductsByCategory from '../helpers/fetchProductsByCategory';
+import displayCOPCurrency from '../helpers/displayCurrency';
+import addToCart from '../helpers/addToCart';
+import toastr from 'toastr';
+import Context from "../context";
 
 const VerticalCardProduct = ({category, heading}) => {
 
@@ -13,13 +16,20 @@ const VerticalCardProduct = ({category, heading}) => {
     const loadingList = new Array(13).fill(null);
     const scrollElement = useRef();
 
+    const { fetchCartCountToUser } = useContext(Context);
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id);
+
+        fetchCartCountToUser();
+    };
+
     const fetchData = async () => {
         setLoading(true);
         const response = await fetchProductsByCategory(category);
 
-        if ( response.success ) {
+        if ( response.success )
             setData(response.data);
-        }
 
         if ( response.error ) {
             toastr.info(response.message);
@@ -87,7 +97,7 @@ const VerticalCardProduct = ({category, heading}) => {
                     ) : (
                         data.map((item, index) => {
                             return (
-                                <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'>
+                                <Link to={'producto/'+item?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'>
                                     <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center'>
                                         <img
                                             src={item?.image[0]}
@@ -112,12 +122,15 @@ const VerticalCardProduct = ({category, heading}) => {
                                         </div>
 
                                         <div className='flex items-center py-1'>
-                                            <button className='bg-red-600 hover:bg-red-700 text-white text-1xl px-3 py-1 rounded-full'>
+                                            <button
+                                                className='bg-red-600 hover:bg-red-700 text-white text-1xl px-3 py-1 rounded-full'
+                                                onClick={(e) => handleAddToCart(e, item?._id)}
+                                            >
                                                 <IoMdCart />
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             )
                         })
                     )

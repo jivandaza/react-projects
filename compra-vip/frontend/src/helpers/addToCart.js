@@ -1,8 +1,29 @@
+import { setUserDetails } from "../store/userSlice";
+import summaryApi from "../common";
+import toastr from "toastr";
+
 const addToCart = async (e, id) => {
     e.stopPropagation();
     e.preventDefault();
 
-    alert('add to cart');
+    const response = await fetch(summaryApi.addToCartProduct.url, {
+        method: summaryApi.addToCartProduct.method,
+        credentials: 'include',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            productId: id
+        })
+    });
+
+    const { message, success, error } = await response.json();
+
+    if ( success )
+        toastr.success(message);
+
+    if ( error )
+        toastr.info(message);
 };
 
 export default addToCart;

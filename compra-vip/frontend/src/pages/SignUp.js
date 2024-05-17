@@ -48,39 +48,40 @@ const SignUp = () => {
         }
     }
 
+    const fetchSignUp = async () => {
+        const response = await fetch(summaryApi.signUp.url, {
+            method: summaryApi.signUp.method,
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        const { existUser, message, success, error } = await response.json();
+
+        if ( success ) {
+            toastr.success(message);
+            navigation('/acceder');
+        }
+
+        if ( existUser )
+            toastr.warning(message);
+        else if ( error )
+            toastr.error(message);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if ( data.password === data.confirmPassword ) {
-            const dataResponse = await fetch(summaryApi.signUp.url, {
-                method: summaryApi.signUp.method,
-                headers: {
-                    'content-type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            const { existUser, message, success, error } = await dataResponse.json();
-
-            if ( existUser ) {
-                toastr.warning(message);
-            } else if ( error ) {
-                toastr.error(message);
-            }
-
-            if ( success ) {
-                toastr.success(message);
-                setTimeout(() => navigation('/acceder'), 3000);
-            }
-        } else {
+        if ( data.password === data.confirmPassword )
+            fetchSignUp();
+        else
             toastr.warning('Las contraseñas no coinciden');
-        }
     }
 
     useEffect(() => {
-        if ( user ) {
+        if ( user )
             navigation(-1);
-        }
     }, [user, navigation ]);
 
     return (

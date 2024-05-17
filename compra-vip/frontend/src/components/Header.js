@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import Logo from './Logo';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { GrSearch } from 'react-icons/gr';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useDispatch, useSelector } from "react-redux";
+import { setUserDetails } from "../store/userSlice";
+import Logo from './Logo';
 import ROLE from './../common/role';
 import summaryApi from "../common";
 import toastr from "toastr";
-import { setUserDetails } from "../store/userSlice";
+import Context from "../context";
 
 const Header = () => {
 
@@ -17,26 +18,24 @@ const Header = () => {
     const user = useSelector(state => state?.user?.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { cartProductCount } = useContext(Context);
 
     const handleLogout = async () => {
-        const dataRequest = await fetch(summaryApi.logout.url, {
+        const response = await fetch(summaryApi.logout.url, {
             method: summaryApi.logout.method,
             credentials: 'include'
         });
 
-        const { message, success, error } = await dataRequest.json();
+        const { message, success, error } = await response.json();
 
         if ( success ) {
             toastr.info(message);
-            setTimeout(() => {
-                dispatch(setUserDetails(null));
-                navigate('/');
-            }, 3000);
+            dispatch(setUserDetails(null));
+            navigate('/');
         }
 
-        if ( error ) {
+        if ( error )
             toastr.error(message);
-        }
     }
 
     return (
@@ -97,12 +96,20 @@ const Header = () => {
                             )
                         }
                     </div>
-                    <div className='text-2xl relative'>
-                        <span className='cursor-pointer'><FaShoppingCart /></span>
-                        <div className='bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-3'>
-                            <p className='text-sm'>0</p>
-                        </div>
-                    </div>
+
+                    {
+                        user?._id && (
+                            <Link to={'/carrito'} className='text-2xl relative'>
+                                <span><FaShoppingCart /></span>
+                                <div className='bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-3'>
+                                    <p className='text-sm'>
+                                        {cartProductCount}
+                                    </p>
+                                </div>
+
+                            </Link>
+                        )
+                    }
                     <div>
                         {
                             user?._id

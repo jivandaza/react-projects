@@ -1,20 +1,21 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
 import { IoMdCart } from 'react-icons/io';
-import displayCOPCurrency from '../helpers/displayCurrency';
 import fetchProductsByCategory from '../helpers/fetchProductsByCategory';
+import displayCOPCurrency from '../helpers/displayCurrency';
 import addToCart from '../helpers/addToCart';
 import toastr from 'toastr';
 import Context from "../context";
 
-const HorizontalCardProduct = ({category, heading}) => {
+const CategoryWiseProductDisplay = ({
+    category,
+    heading
+}) => {
 
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const loadingList = new Array(13).fill(null);
-    const scrollElement = useRef();
 
     const { fetchCartCountToUser } = useContext(Context);
 
@@ -39,14 +40,6 @@ const HorizontalCardProduct = ({category, heading}) => {
         setLoading(false);
     };
 
-    const scrollRight = () => {
-        scrollElement.current.scrollLeft += 300;
-    }
-
-    const scrollLeft = () => {
-        scrollElement.current.scrollLeft -= 300;
-    }
-
     useEffect(() => {
         fetchData();
     }, []);
@@ -56,37 +49,26 @@ const HorizontalCardProduct = ({category, heading}) => {
 
             <h2 className='text-2xl font-bold py-4'>{heading}</h2>
 
-            <div className='flex items-center gap-4 md:gap-6 overflow-scroll scrollbar-none transition-all' ref={scrollElement}>
-
-                <button
-                    className='bg-white text-red-600 shadow-md rounded-full p-1 hover:opacity-70 absolute left-0 text-lg hidden md:block'
-                    onClick={scrollLeft}
-                >
-                    <FaAngleLeft />
-                </button>
-                <button
-                    className='bg-white text-red-600 shadow-md rounded-full p-1 hover:opacity-70 absolute right-0 text-lg hidden md:block'
-                    onClick={scrollRight}
-                >
-                    <FaAngleRight />
-                </button>
+            <div className='grid grid-cols-[repeat(auto-fit,minmax(300px,320px))] justify-around md:gap-6 overflow-x-scroll scrollbar-none transition-all'>
 
                 {
                     loading ? (
                         loadingList.map((item, index) => {
                             return (
-                                <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex' key={index}>
-                                    <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px] animate-pulse'>
+                                <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'>
+                                    <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse'>
                                     </div>
 
-                                    <div className='p-3 grid w-full gap-2'>
-                                        <h2 className='font-medium text-base md:text-lg bg-slate-200 animate-pulse p-1 rounded-full'></h2>
-                                        <p className='p-1 bg-slate-200 animate-pulse rounded-full'></p>
-                                        <p className='p-1 bg-slate-200 animate-pulse rounded-full'></p>
-                                        <p className='p-1 bg-slate-200 animate-pulse rounded-full'></p>
+                                    <div className='p-3 w-full grid gap-2'>
+                                        <h2 className='p-1 py-2 animate-pulse rounded-full bg-slate-200'
+                                        ></h2>
+                                        <p className='p-1 animate-pulse rounded-full bg-slate-200 py-2'></p>
+                                        <p className='p-1 animate-pulse rounded-full bg-slate-200 py-2'></p>
+                                        <p className='p-1 animate-pulse rounded-full bg-slate-200 py-2'></p>
 
                                         <div className='flex items-center py-1 w-10'>
-                                            <button className='text-1xl p-3 rounded-full w-full bg-slate-200 animate-pulse'></button>
+                                            <button className='px-3 rounded-full bg-slate-200 py-2 w-full animate-pulse'>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -95,12 +77,12 @@ const HorizontalCardProduct = ({category, heading}) => {
                     ) : (
                         data.map((item, index) => {
                             return (
-                                <Link to={'producto/'+item?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] h-36 bg-white rounded-sm shadow-md flex' key={item.name + index}>
-                                    <div className='bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px]'>
+                                <Link to={'/producto/'+item?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'>
+                                    <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center'>
                                         <img
                                             src={item?.image[0]}
                                             alt={item?.name}
-                                            className='object-scale-down h-full hover:scale-110 transition-all'
+                                            className='object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply'
                                         />
                                     </div>
 
@@ -139,4 +121,4 @@ const HorizontalCardProduct = ({category, heading}) => {
     )
 };
 
-export default HorizontalCardProduct;
+export default CategoryWiseProductDisplay;

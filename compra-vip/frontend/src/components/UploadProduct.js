@@ -68,11 +68,11 @@ const UploadProduct = ({
             }
         });
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dataResponse = await fetch(summaryApi.uploadProduct.url, {
+        const response = await fetch(summaryApi.uploadProduct.url, {
             method: summaryApi.uploadProduct.method,
             credentials: 'include',
             headers: {
@@ -81,20 +81,18 @@ const UploadProduct = ({
             body: JSON.stringify(data)
         });
 
-        const { message, success, error } = await dataResponse.json();
+        const { message, success, error } = await response.json();
 
         if ( success ) {
             toastr.success(message);
-            setTimeout(() => {
-                onClose();
-                allProducts();
-            }, 3000);
+            onClose();
+            allProducts();
         }
 
         if ( error ) {
             toastr.info(message);
             dispatch(setUserDetails(null));
-            setTimeout(() => navigation('/'), 3000);
+            navigation('/');
         }
     };
 
