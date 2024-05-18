@@ -16,12 +16,12 @@ const VerticalCardProduct = ({category, heading}) => {
     const loadingList = new Array(13).fill(null);
     const scrollElement = useRef();
 
-    const { fetchCartCountToUser } = useContext(Context);
+    const { fetchCountProductsToCart } = useContext(Context);
 
     const handleAddToCart = async (e, id) => {
         await addToCart(e, id);
 
-        fetchCartCountToUser();
+        fetchCountProductsToCart();
     };
 
     const fetchData = async () => {

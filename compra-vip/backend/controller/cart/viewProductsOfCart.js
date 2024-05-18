@@ -1,10 +1,10 @@
-import cartProductModel from '../../models/cartProductModel.js';
+import CartProductModel from '../../models/cartProductModel.js';
 
-const viewCartToProductsController = async (req, res) => {
+const viewProductsOfCartController = async (req, res) => {
     try {
         const { userId } = req;
 
-        const data = await cartProductModel.find({
+        const data = await CartProductModel.find({
             userId
         }).populate("productId");
 
@@ -24,4 +24,4 @@ const viewCartToProductsController = async (req, res) => {
     }
 };
 
-export default viewCartToProductsController;
+export default viewProductsOfCartController;

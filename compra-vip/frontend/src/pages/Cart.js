@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setUserDetails } from '../store/userSlice';
 import { MdDelete } from "react-icons/md";
 import displayCOPCurrency from './../helpers/displayCurrency';
-import summaryApi from '../common';
+import summaryApi from '../common/index';
 import toastr from 'toastr';
 import Context from "../context";
 
@@ -15,13 +15,13 @@ const Cart = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { cartProductCount } = useContext(Context);
+    const { cartProductCount, fetchCountProductsToCart } = useContext(Context);
 
     const loadingCart = new Array(cartProductCount).fill(null);
 
     const fetchData = async () => {
-        const response = await fetch(summaryApi.viewCartToProducts.url, {
-            method: summaryApi.viewCartToProducts.method,
+        const response = await fetch(summaryApi.viewProductsOfCart.url, {
+            method: summaryApi.viewProductsOfCart.method,
             credentials: 'include'
         });
 
@@ -42,7 +42,89 @@ const Cart = () => {
     };
 
     const deleteCartProduct = async (id) => {
+        const response = await fetch(summaryApi.deleteProductToCart.url,{
+            method : summaryApi.deleteProductToCart.method,
+            credentials : 'include',
+            headers : {
+                'content-type' : 'application/json'
+            },
+            body : JSON.stringify(
+                {
+                    cartId: id,
+                }
+            )
+        });
 
+        const { message, success, error } = await response.json();
+
+        if ( success ){
+            fetchData();
+            fetchCountProductsToCart();
+        }
+
+        if ( error ) {
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            navigate('/');
+        }
+    };
+
+    const decreaseQty = async (id, qty) => {
+        if (qty >= 2){
+            const response = await fetch(summaryApi.updateProductToCart.url,{
+                method : summaryApi.updateProductToCart.method,
+                credentials : 'include',
+                headers : {
+                    'content-type' : 'application/json'
+                },
+                body : JSON.stringify(
+                    {
+                        cartId : id,
+                        quantity : qty - 1
+                    }
+                )
+            });
+
+            const { message, success, error } = await response.json();
+
+            if ( success )
+                fetchData();
+
+            if ( error ) {
+                toastr.info(message);
+                dispatch(setUserDetails(null));
+                navigate('/');
+            }
+        }
+    };
+
+    const increaseQty = async (id, qty) => {
+        const response = await fetch(summaryApi.updateCartToProduct.url,{
+            method : summaryApi.updateCartToProduct.method,
+            credentials : 'include',
+            headers : {
+                'content-type' : 'application/json'
+            },
+            body : JSON.stringify(
+                {
+                    cartId : id,
+                    quantity : qty + 1
+                }
+            )
+        });
+
+        const { message, success, error } = await response.json();
+
+        console.log(success);
+
+        if ( success )
+            fetchData();
+
+        if ( error ) {
+            toastr.info(message);
+            dispatch(setUserDetails(null));
+            navigate('/');
+        }
     };
 
     useEffect(() => {
@@ -51,11 +133,11 @@ const Cart = () => {
         setIsLoading(false);
     }, []);
 
-    const totalQty = Data.reduce((previousValue,currentValue)=> previousValue + currentValue.quantity,0);
-    const totalPrice = Data.reduce((preve,curr)=> preve + (curr.quantity * curr?.productId?.price) ,0);
+    const totalQty = Data.reduce((previousValue, currentValue) => previousValue + currentValue.quantity, 0);
+    const totalPrice = Data.reduce((previousValue, currentValue) => previousValue + (currentValue.quantity * currentValue?.productId?.price) ,0);
 
     return (
-        <div className='container mx-auto'>
+        <div className='container mx-auto min-h-[80vh]'>
 
             {/**        Mostrar Mensaje Productos Vacio      **/}
             {
@@ -86,8 +168,8 @@ const Cart = () => {
                         ) : (
                             Data.map(item => {
                                 return (
-                                    <div className='w-full bg-white h-32 my-2 border border-slate-300 rounded grid grid-cols-[128px,1fr]' key={item?._id}>
-                                        <div className='w-32 h-32 bg-slate-200'>
+                                    <div className='w-full bg-white h-36 sm:h-32 my-2 border border-slate-300 rounded grid grid-cols-[128px,1fr]' key={item?._id}>
+                                        <div className='w-32 h-36 sm:h-32 bg-slate-200'>
                                             <img src={item?.productId?.image[0]} className='w-full h-full object-scale-down mix-blend-multiply' />
                                         </div>
                                         <div className='px-4 py-2 relative'>
@@ -99,9 +181,15 @@ const Cart = () => {
                                             <h2 className='text-lg lg:text-xl text-ellipsis line-clamp-1'>{item?.productId?.name}</h2>
                                             <p className='capitalize text-slate-500'>{item?.productId.category}</p>
 
-                                            <div className='flex items-center justify-between'>
-                                                <p className='text-red-600 font-medium text-lg'>{displayCOPCurrency(item?.productId?.price)}</p>
-                                                <p className='text-slate-600 font-semibold text-lg'>{displayCOPCurrency(item?.productId?.price  * item?.quantity)}</p>
+                                            <div className='sm:flex items-center justify-between'>
+                                                <p className='text-red-600 font-medium text-sm sm:text-lg'>{displayCOPCurrency(item?.productId?.price)}</p>
+                                                <p className='text-slate-600 font-semibold text-sm sm:text-lg'>{displayCOPCurrency(item?.productId?.price  * item?.quantity)}</p>
+                                            </div>
+
+                                            <div className='flex items-center gap-3 mt-1'>
+                                                <button className='border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded ' onClick={()=> decreaseQty(item?._id,item?.quantity)}>-</button>
+                                                <span>{item?.quantity}</span>
+                                                <button className='border border-red-600 text-red-600 hover:bg-red-600 hover:text-white w-6 h-6 flex justify-center items-center rounded ' onClick={()=> increaseQty(item?._id,item?.quantity)}>+</button>
                                             </div>
                                         </div>
                                     </div>

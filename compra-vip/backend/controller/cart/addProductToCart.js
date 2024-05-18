@@ -1,15 +1,15 @@
-import cartProductModel from '../../models/cartProductModel.js';
+import CartProductModel from '../../models/cartProductModel.js';
 
-const addToCartProductController = async (req, res) => {
+const addProductToCartController = async (req, res) => {
     try {
         const   { productId }     = req?.body;
         const   currentUser       = req?.userId;
 
-        const isProductAvailable = await cartProductModel.findOne({ productId });
+        const isProductAvailable = await CartProductModel.findOne({ productId });
 
         if( isProductAvailable ){
             return res.json({
-                message : 'Ya existe en añadir al carrito',
+                message : 'Ya existe producto en carrito',
                 success : false,
                 error : true
             });
@@ -21,12 +21,12 @@ const addToCartProductController = async (req, res) => {
             userId : currentUser,
         };
 
-        const addToCartProduct = new cartProductModel(payload);
+        const addToCartProduct = new CartProductModel(payload);
 
         await addToCartProduct.save();
 
         return res.json({
-            message : 'Producto añadido al carrito',
+            message : 'Producto añadido al carrito...',
             success : true,
             error : false
         });
@@ -41,4 +41,4 @@ const addToCartProductController = async (req, res) => {
     }
 };
 
-export default addToCartProductController;
+export default addProductToCartController;

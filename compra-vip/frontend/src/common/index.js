@@ -49,17 +49,25 @@ const summaryApi = {
         url: `${backendDomain}/api/producto/datos`,
         method: 'post'
     },
-    addToCartProduct: {
+    addProductToCart: {
         url: `${backendDomain}/api/carrito/agregar`,
         method: 'post'
     },
-    countToCartProduct: {
+    countProductsToCart: {
         url: `${backendDomain}/api/carrito/contar`,
         method: 'get'
     },
-    viewCartToProducts: {
+    viewProductsOfCart: {
         url: `${backendDomain}/api/carrito/datos`,
         method: 'get'
+    },
+    updateProductToCart: {
+        url: `${backendDomain}/api/carrito/actualizar`,
+        method: 'post'
+    },
+    deleteProductToCart: {
+        url: `${backendDomain}/api/carrito/eliminar`,
+        method: 'post'
     }
 }
 

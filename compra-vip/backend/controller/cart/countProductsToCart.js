@@ -1,10 +1,10 @@
-import cartProductModel from '../../models/cartProductModel.js';
+import CartProductModel from '../../models/cartProductModel.js';
 
-const countToCartProductController = async (req, res) => {
+const countProductsToCartController = async (req, res) => {
     try {
         const userId = req?.userId;
 
-        const count = await cartProductModel.countDocuments({
+        const count = await CartProductModel.countDocuments({
             userId
         });
 
@@ -27,4 +27,4 @@ const countToCartProductController = async (req, res) => {
     }
 };
 
-export default countToCartProductController;
+export default countProductsToCartController;

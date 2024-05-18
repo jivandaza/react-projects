@@ -12,9 +12,11 @@ import updateProductController from "../controller/product/updateProduct.js";
 import getCategoryController from "../controller/product/getCategory.js";
 import getProductsByCategoryController from "../controller/product/getProductsByCategory.js";
 import getProductController from "../controller/product/getProduct.js";
-import addToCartProductController from "../controller/cart/addToCartProduct.js";
-import countToCartProductController from "../controller/cart/countToCartProduct.js";
-import viewCartToProductsController from "../controller/cart/viewCartToProducts.js";
+import addProductToCartController from "../controller/cart/addProductToCart.js";
+import countProductsToCartController from "../controller/cart/countProductsToCart.js";
+import viewProductsOfCartController from "../controller/cart/viewProductsOfCart.js";
+import updateProductToCartController from "../controller/cart/updateProductToCart.js";
+import deleteProductToCartController from "../controller/cart/deleteProductToCart.js";
 
 const router = express.Router();
 
@@ -37,8 +39,10 @@ router.post('/producto/productos-categoria', getProductsByCategoryController);
 router.post('/producto/datos', getProductController);
 
 // cart product
-router.post('/carrito/agregar', authToken, addToCartProductController);
-router.get('/carrito/contar', authToken, countToCartProductController);
-router.get('/carrito/datos', authToken, viewCartToProductsController);
+router.post('/carrito/agregar', authToken, addProductToCartController);
+router.get('/carrito/contar', authToken, countProductsToCartController);
+router.get('/carrito/datos', authToken, viewProductsOfCartController);
+router.post('/carrito/actualizar', authToken, updateProductToCartController);
+router.post('/carrito/eliminar', authToken, deleteProductToCartController);
 
 export default router;

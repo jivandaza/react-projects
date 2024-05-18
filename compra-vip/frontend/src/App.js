@@ -12,7 +12,7 @@ import './App.css';
 
 function App() {
 
-    const [cartProductCount, setCartProductCount] = useState(0);
+    const [countProductsOfCart, setCountProductsOfCart] = useState(0);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -34,16 +34,16 @@ function App() {
             dispatch(setUserDetails(data));
     };
 
-    const fetchCartCountToUser = async () => {
-        const response = await fetch(summaryApi.countToCartProduct.url, {
-            method: summaryApi.countToCartProduct.method,
+    const fetchCountProductsToCart = async () => {
+        const response = await fetch(summaryApi.countProductsToCart.url, {
+            method: summaryApi.countProductsToCart.method,
             credentials: 'include'
         });
 
         const { data, success } = await response.json();
 
         if ( success )
-            setCartProductCount(data?.count);
+            setCountProductsOfCart(data?.count);
     };
 
     useEffect(() => {
@@ -59,15 +59,15 @@ function App() {
         /**     User Details        */
         fetchUserData();
         /**     Count Cart Product  */
-        fetchCartCountToUser();
+        fetchCountProductsToCart();
     }, []);
 
     return (
         <>
             <Context.Provider value={{
                 fetchUserData,
-                cartProductCount,
-                fetchCartCountToUser
+                countProductsOfCart,
+                fetchCountProductsToCart
             }} >
                 <Header />
 

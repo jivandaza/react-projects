@@ -18,7 +18,7 @@ const Login = () => {
 
     const user = useSelector(state => state?.user?.user);
     const navigation = useNavigate();
-    const { fetchUserData, fetchCartCountToUser } = useContext(Context);
+    const { fetchUserData, fetchCountProductsToCart } = useContext(Context);
 
     const handleOneChange = (e) => {
         const { name, value } = e.target;
@@ -48,7 +48,7 @@ const Login = () => {
         if ( success ) {
             toastr.info(message);
             fetchUserData();
-            fetchCartCountToUser();
+            fetchCountProductsToCart();
             navigation('/');
         }
 

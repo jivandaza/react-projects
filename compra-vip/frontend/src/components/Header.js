@@ -18,7 +18,7 @@ const Header = () => {
     const user = useSelector(state => state?.user?.user);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { cartProductCount } = useContext(Context);
+    const { countProductsOfCart } = useContext(Context);
 
     const handleLogout = async () => {
         const response = await fetch(summaryApi.logout.url, {
@@ -46,10 +46,10 @@ const Header = () => {
                         <Logo w={90} h={63} />
                     </Link>
                 </div>
-                <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-2'>
+                <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-4'>
                     <input
                         type='text'
-                        placeholder='Buscar Producto'
+                        placeholder='Buscar'
                         className='w-full outline-none'
                     />
                     <div className='text-lg min-w-[50px] h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white cursor-pointer'>
@@ -103,7 +103,7 @@ const Header = () => {
                                 <span><FaShoppingCart /></span>
                                 <div className='bg-red-600 text-white w-5 h-5 rounded-full flex items-center justify-center absolute -top-2 -right-3'>
                                     <p className='text-sm'>
-                                        {cartProductCount}
+                                        {countProductsOfCart}
                                     </p>
                                 </div>
 
@@ -114,16 +114,14 @@ const Header = () => {
                         {
                             user?._id
                                 ?   <button
-                                    className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'
-                                    onClick={handleLogout}
-                                >
-                                    Salir
-                                </button>
+                                        className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'
+                                        onClick={handleLogout}
+                                    >Salir</button>
                                 :   <Link to='/acceder'>
-                                    <button className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>
-                                        Acceder
-                                    </button>
-                                </Link>
+                                        <button className='px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700'>
+                                            Acceder
+                                        </button>
+                                    </Link>
                         }
                     </div>
                 </div>

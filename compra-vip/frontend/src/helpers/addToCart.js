@@ -6,8 +6,8 @@ const addToCart = async (e, id) => {
     e.stopPropagation();
     e.preventDefault();
 
-    const response = await fetch(summaryApi.addToCartProduct.url, {
-        method: summaryApi.addToCartProduct.method,
+    const response = await fetch(summaryApi.addProductToCart.url, {
+        method: summaryApi.addProductToCart.method,
         credentials: 'include',
         headers: {
             'content-type': 'application/json'
