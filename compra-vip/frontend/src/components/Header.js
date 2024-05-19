@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { GrSearch } from 'react-icons/gr';
 import { FaRegCircleUser } from 'react-icons/fa6';
 import { FaShoppingCart } from 'react-icons/fa';
@@ -13,7 +13,10 @@ import Context from "../context";
 
 const Header = () => {
 
+    const searchInput = useLocation();
+
     const [menuDisplay, setMenuDisplay] = useState(false);
+    const [search, setSearch] = useState(searchInput?.search?.split('-')[1]);
 
     const user = useSelector(state => state?.user?.user);
     const dispatch = useDispatch();
@@ -36,7 +39,24 @@ const Header = () => {
 
         if ( error )
             toastr.error(message);
-    }
+    };
+
+    const handleSearch = (e) => {
+        const { value } = e.target;
+
+        if ( value )
+            navigate(`/buscar?q=${value}`);
+        else
+            navigate('/buscar');
+    };
+
+    const handleBtnSearch = () => {
+        setSearch(prev => search);
+        if ( search )
+            navigate(`/buscar?q=${search}`);
+        else
+            navigate('/buscar');
+    };
 
     return (
         <header className='h-16 shadow-md bg-white fixed w-full z-40'>
@@ -46,13 +66,18 @@ const Header = () => {
                         <Logo w={90} h={63} />
                     </Link>
                 </div>
-                <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-4'>
+                <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full focus-within:shadow-md pl-3'>
                     <input
                         type='text'
                         placeholder='Buscar'
                         className='w-full outline-none'
+                        onChange={handleSearch}
+                        value={search}
                     />
-                    <div className='text-lg min-w-[50px] h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white cursor-pointer'>
+                    <div
+                        className='text-lg min-w-[50px] h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white cursor-pointer'
+                        onClick={handleBtnSearch}
+                    >
                         <GrSearch />
                     </div>
                 </div>

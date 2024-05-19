@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoMdCart } from 'react-icons/io';
 import fetchProductsByCategory from '../helpers/fetchProductsByCategory';
 import displayCOPCurrency from '../helpers/displayCurrency';
 import addToCart from '../helpers/addToCart';
+import scrollTop from '../helpers/scrollTop';
+import Context from '../context';
 import toastr from 'toastr';
-import Context from "../context";
 
 const CategoryWiseProductDisplay = ({
     category,
@@ -77,7 +78,11 @@ const CategoryWiseProductDisplay = ({
                     ) : (
                         data.map((item, index) => {
                             return (
-                                <Link to={'/producto/'+item?._id} className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'>
+                                <Link
+                                    to={'/producto/'+item?._id}
+                                    className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'
+                                    onClick={scrollTop}
+                                >
                                     <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center'>
                                         <img
                                             src={item?.image[0]}

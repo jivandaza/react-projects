@@ -9,7 +9,8 @@ import AllUsers from './../pages/AllUsers';
 import AllProducts from './../pages/AllProducts';
 import CategoryProduct from '../pages/CategoryProduct';
 import ProductDetails from '../pages/ProductDetails';
-import Cart from "../pages/Cart";
+import Cart from '../pages/Cart';
+import SearchProduct from '../pages/SearchProduct';
 
 const router = createBrowserRouter([
     {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
                 element: <SignUp />
             },
             {
-                path: 'producto-categoria/:category',
+                path: 'producto-categoria',
                 element: <CategoryProduct />
             },
             {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
             {
                 path: 'carrito',
                 element: <Cart />
+            },
+            {
+                path: 'buscar',
+                element: <SearchProduct />
             },
             {
                 path: 'admin-panel',

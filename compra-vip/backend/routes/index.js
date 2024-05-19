@@ -12,6 +12,7 @@ import updateProductController from "../controller/product/updateProduct.js";
 import getCategoryController from "../controller/product/getCategory.js";
 import getProductsByCategoryController from "../controller/product/getProductsByCategory.js";
 import getProductController from "../controller/product/getProduct.js";
+import searchProductController from "../controller/product/searchProduct.js";
 import addProductToCartController from "../controller/cart/addProductToCart.js";
 import countProductsToCartController from "../controller/cart/countProductsToCart.js";
 import viewProductsOfCartController from "../controller/cart/viewProductsOfCart.js";
@@ -37,6 +38,7 @@ router.put('/producto/editar', authToken, updateProductController);
 router.get('/producto/categorias', getCategoryController);
 router.post('/producto/productos-categoria', getProductsByCategoryController);
 router.post('/producto/datos', getProductController);
+router.get('/producto/buscar', searchProductController);
 
 // cart product
 router.post('/carrito/agregar', authToken, addProductToCartController);
