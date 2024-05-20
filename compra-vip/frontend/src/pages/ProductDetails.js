@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { IoMdCart } from 'react-icons/io';
 import CategoryWiseProductDisplay from '../components/CategoryWiseProductDisplay';
 import displayCOPCurrency from '../helpers/displayCurrency';
+import addToCart from '../helpers/addToCart';
+import Context from '../context';
 import summaryApi from '../common';
 import toastr from 'toastr';
 
@@ -21,6 +23,7 @@ const ProductDetails = () => {
     const productImageListLoading = new Array(4).fill(null);
     const params = useParams();
     const navigation = useNavigate();
+    const { fetchCountProductsToCart } = useContext(Context);
 
     const handleZoomImage = useCallback((e) => {
         setZoomImage(true);
@@ -41,6 +44,20 @@ const ProductDetails = () => {
 
     const handleMouseEnterProduct = (imageURL) => {
         setActiveImage(imageURL);
+    };
+
+    const handleAddToCart = async (e, id) => {
+        await addToCart(e, id);
+
+        fetchCountProductsToCart();
+    };
+
+    const handleBuyToCart = async (e, id) => {
+        await addToCart(e, id);
+
+        fetchCountProductsToCart();
+
+        navigation('/carrito');
     };
 
     const fetchProductDetails = async () => {
@@ -185,13 +202,13 @@ const ProductDetails = () => {
                             <div className='flex items-center gap-3 my-2'>
                                 <button
                                     className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-red-600 font-medium hover:bg-red-600 hover:text-white'
-                                    onClick={() => console.log('Buy...')}
+                                    onClick={(e) => handleBuyToCart(e, data?._id)}
                                 >
                                     Comprar
                                 </button>
                                 <button
                                     className='border-2 border-red-600 rounded px-3 py-1 min-w-[120px] text-2xl text-white bg-red-600 hover:text-red-600 hover:bg-white flex justify-center'
-                                    onClick={() => console.log('Add Cart...')}
+                                    onClick={(e) => handleAddToCart(e, data?._id)}
                                 >
                                     <IoMdCart />
                                 </button>

@@ -13,7 +13,7 @@ const CategoryProduct = () => {
 
     const urlCategoryListObject = {};
 
-    urlCategoryListInArray.forEach(item =>{
+    urlCategoryListInArray.forEach(item => {
         urlCategoryListObject[item] = true
     });
 
@@ -28,12 +28,21 @@ const CategoryProduct = () => {
 
         setSortBy(value);
 
-        if(value === 'asc')
+        if( value === 'asc' )
             setData(previousValue => previousValue.sort((a,b)=>a.sellingPrice - b.sellingPrice));
 
-        if(value === 'dsc')
+        if( value === 'dsc' )
             setData(previousValue => previousValue.sort((a,b)=>b.sellingPrice - a.sellingPrice));
     };
+
+    const handleSortBy = () => {
+        if ( sortBy === '' )
+            return;
+        if ( sortBy === 'asc' )
+            setData(previousValue => previousValue.sort((a,b)=>a.sellingPrice - b.sellingPrice));
+        if( sortBy === 'dsc' )
+            setData(previousValue => previousValue.sort((a,b)=>b.sellingPrice - a.sellingPrice));
+    }
 
     const handleSelectCategory = (e) => {
         const { value, checked } =  e.target;
@@ -47,8 +56,8 @@ const CategoryProduct = () => {
     };
 
     const fetchData = async () => {
-        const response = await fetch(summaryApi.productsByCategory.url, {
-            method: summaryApi.productsByCategory.method,
+        const response = await fetch(summaryApi.filterProductsByCategory.url, {
+            method: summaryApi.filterProductsByCategory.method,
             headers : {
                 'content-type' : 'application/json'
             },
@@ -59,8 +68,10 @@ const CategoryProduct = () => {
 
         const { data, success } = await response.json();
 
-        if ( success )
+        if ( success ){
             setData(data);
+            handleSortBy();
+        }
     };
 
     useEffect(() => {}, [sortBy]);
@@ -80,9 +91,10 @@ const CategoryProduct = () => {
         setFilterCategoryList(arrayOfCategory);
 
         const urlFormat = arrayOfCategory.map((item, index) => {
-            if((arrayOfCategory.length - 1 ) === index  ){
+
+            if((arrayOfCategory.length - 1 ) === index  )
                 return `category=${item}`;
-            }
+
             return `category=${item}&&`;
         });
 
@@ -153,6 +165,26 @@ const CategoryProduct = () => {
                     </div>
                 </div>
 
+            </div>
+
+            {/**        Version Móvil       **/}
+            <div className='sm:hidden'>
+                <div className='grid grid-cols'>
+                    <div className='px-4'>
+                        <p className='font-medium text-slate-800 text-lg my-2'>Resultados Busqueda : {Data.length}</p>
+
+                        <div className='min-h-[calc(100vh-120px)] overflow-y-scroll max-h-[calc(100vh-120px)]'>
+                            {
+                                Data.length !== 0 && !isLoading && (
+                                    <ShowProductsOfSearch
+                                        data={Data}
+                                        isLoading={isLoading}
+                                    />
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>

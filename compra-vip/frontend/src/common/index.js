@@ -53,6 +53,10 @@ const summaryApi = {
         url: `${backendDomain}/api/producto/buscar`,
         method: 'get'
     },
+    filterProductsByCategory: {
+        url: `${backendDomain}/api/producto/filtrar`,
+        method: 'post'
+    },
     addProductToCart: {
         url: `${backendDomain}/api/carrito/agregar`,
         method: 'post'

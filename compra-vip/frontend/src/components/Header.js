@@ -13,10 +13,12 @@ import Context from "../context";
 
 const Header = () => {
 
-    const searchInput = useLocation();
+    const location = useLocation();
+    const urlSearch = new URLSearchParams(location?.search);
+    const searchQuery = urlSearch.getAll('q');
 
     const [menuDisplay, setMenuDisplay] = useState(false);
-    const [search, setSearch] = useState(searchInput?.search?.split('-')[1]);
+    const [search, setSearch] = useState(searchQuery);
 
     const user = useSelector(state => state?.user?.user);
     const dispatch = useDispatch();
@@ -43,6 +45,7 @@ const Header = () => {
 
     const handleSearch = (e) => {
         const { value } = e.target;
+        setSearch(value);
 
         if ( value )
             navigate(`/buscar?q=${value}`);
@@ -51,7 +54,6 @@ const Header = () => {
     };
 
     const handleBtnSearch = () => {
-        setSearch(prev => search);
         if ( search )
             navigate(`/buscar?q=${search}`);
         else
