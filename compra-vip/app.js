@@ -7,6 +7,10 @@ import cookieParser from 'cookie-parser';
 import router from './routes/index.js';
 import { fileURLToPath } from 'url';
 
+connectDB().then(() => {
+    console.log('Conexión DB establecida...');
+});
+
 dotenv.config();
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
@@ -27,9 +31,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
 });
 
-connectDB().then(() => {
-    console.log('Conexión DB establecida...');
-    app.listen(port, () => {
-        console.log(`Servidor iniciado en: http://localhost:${port}/`)
-    });
+app.listen(port, () => {
+    console.log(`Servidor iniciado en: http://localhost:${port}/`)
 });
