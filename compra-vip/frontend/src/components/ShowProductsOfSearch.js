@@ -27,7 +27,7 @@ const ShowProductsOfSearch = ({
                 isLoading ? (
                     loadingList.map((item, index) => {
                         return (
-                            <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md'>
+                            <div className='w-full min-w-[280px] md:min-w-[320px] max-w-[280px] md:max-w-[320px] bg-white rounded-sm shadow-md' key={'loading'+index}>
                                 <div className='bg-slate-200 h-48 p-4 min-w-[280px] md:min-w-[145px] flex justify-center items-center animate-pulse'>
                                 </div>
 
@@ -51,6 +51,7 @@ const ShowProductsOfSearch = ({
                         return (
                             <Link
                                 to={'/producto/'+item?._id}
+                                key={item?.name+index}
                                 className='w-full min-w-[280px] md:min-w-[300px] max-w-[280px] md:max-w-[300px] bg-white rounded-sm shadow-md'
                                 onClick={scrollTop}
                             >

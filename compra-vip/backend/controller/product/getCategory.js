@@ -14,7 +14,7 @@ const getCategory = async (req, res) => {
             }
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             message: 'OK',
             data: productByCategory,
             error: false,
@@ -27,6 +27,7 @@ const getCategory = async (req, res) => {
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,
+            data: []
         });
     }
 };

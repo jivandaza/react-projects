@@ -12,7 +12,7 @@ const filterProductsByCategoryController = async (req, res) => {
 
         return res.json({
             data,
-            message : "OK",
+            message : 'OK',
             success : true,
             error : false
         });
@@ -23,6 +23,7 @@ const filterProductsByCategoryController = async (req, res) => {
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,
+            data: []
         });
     }
 };

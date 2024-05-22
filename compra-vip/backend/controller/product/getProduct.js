@@ -6,7 +6,7 @@ const getProduct = async (req, res) => {
 
         const data = await ProductModel.findById(productId);
 
-        res.status(200).json({
+        return res.status(200).json({
             data,
             message: 'OK',
             success: true,
@@ -19,6 +19,7 @@ const getProduct = async (req, res) => {
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,
+            data: null
         });
     }
 };

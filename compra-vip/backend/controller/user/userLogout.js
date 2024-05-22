@@ -3,13 +3,12 @@ const userLogoutController = async (req, res) => {
         res.clearCookie('token');
 
         res.json({
-            message: 'Cerrando la Sesión',
+            message: 'Cerrando Sesión',
             error: false,
             success: true,
-            data: []
         });
     } catch (err) {
-        console.error('Error en Cerrar Sesión: ', err.message || err);
+        console.log(err.message || err);
 
         res.json({
             message: 'Se ha producido un error, intenta más tarde',

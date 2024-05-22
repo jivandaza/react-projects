@@ -11,12 +11,13 @@ const allUsersController = async (req, res) => {
             error : false
         });
     } catch (err) {
-        console.error('Error en Obtener Usuarios: ', err.message || err);
+        console.log(err.message || err);
 
-        res.status(500).json({
+        res.status(400).json({
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,
+            data: []
         });
     }
 }

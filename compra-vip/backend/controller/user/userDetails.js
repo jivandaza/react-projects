@@ -8,17 +8,16 @@ const userDetailsController = async (req, res) => {
             data : user,
             error : false,
             success : true,
-            message : "OK"
+            message : 'OK'
         });
     } catch (err) {
-        console.error('Error en Detalles de Usuario: ', err.message || err);
-        res.clearCookie('token');
+        console.log(err.message || err);
 
-        res.status(500).json({
-            message: 'Se ha producido un error, intenta más tarde',
-            error: true,
-            success: false,
-            data: []
+        res.status(400).json({
+            message : 'Se ha producido un error, intenta más tarde',
+            error : true,
+            success : false,
+            data : null
         });
     }
 }

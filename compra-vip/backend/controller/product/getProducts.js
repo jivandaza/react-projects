@@ -2,13 +2,13 @@ import ProductModel from './../../models/productModel.js';
 
 const getProducts = async (req, res) => {
     try {
-        const dataAllProducts = await ProductModel.find().sort({createdAt: -1});
+        const data = await ProductModel.find().sort({createdAt: -1});
 
-        res.status(201).json({
+        return res.status(201).json({
             message: 'OK',
             error: false,
             success: true,
-            data: dataAllProducts
+            data
         });
     } catch (err) {
         res.status(400).json({

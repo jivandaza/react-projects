@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserDetails } from '../store/userSlice';
+import { MdModeEdit } from 'react-icons/md';
 import ChangeUserRole from './../components/ChangeUserRole';
-import toastr from "toastr";
+import summaryApi from '../common/index.js';
+import toastr from 'toastr';
 import moment from 'moment';
 import 'moment/locale/es';
-import { MdModeEdit } from 'react-icons/md';
-import summaryApi from '../common/index.js';
-import { setUserDetails } from "../store/userSlice";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 const AllUsers = () => {
 
+    const [isLoading, setIsLoading] = useState(false);
     const [allUsers, setAllUsers] = useState([]);
     const [showChangeUseRole, setShowChangeRole] = useState(false);
     const [updateUser, setUpdateUser] = useState({
@@ -24,6 +25,8 @@ const AllUsers = () => {
     const dispatch = useDispatch();
 
     const fetchAllUsers = async () => {
+        setIsLoading(true);
+
         const response = await fetch(summaryApi.allUsers.url, {
             method: summaryApi.allUsers.method,
             credentials: 'include'
@@ -39,6 +42,8 @@ const AllUsers = () => {
             dispatch(setUserDetails(null));
             navigation('/');
         }
+
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -60,32 +65,40 @@ const AllUsers = () => {
                 </thead>
                 <tbody>
                     {
-                        allUsers.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{index+1}</td>
-                                    <td>{item?.name}</td>
-                                    <td>{item?.email}</td>
-                                    <td>{item?.role}</td>
-                                    <td>{moment(item?.createdAt).format('LL')}</td>
-                                    <td className='py-1'>
-                                        <button
-                                            className='
+                        !isLoading && (
+                            allUsers.map((item, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{index+1}</td>
+                                        <td>{item?.name}</td>
+                                        <td>{item?.email}</td>
+                                        <td>{item?.role}</td>
+                                        <td>{moment(item?.createdAt).format('LL')}</td>
+                                        <td className='py-1'>
+                                            <button
+                                                className='
 '
-                                            onClick={() => {
-                                                setUpdateUser(item);
-                                                setShowChangeRole(true);
-                                            }}
-                                        >
-                                            <MdModeEdit />
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })
+                                                onClick={() => {
+                                                    setUpdateUser(item);
+                                                    setShowChangeRole(true);
+                                                }}
+                                            >
+                                                <MdModeEdit />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        )
                     }
                 </tbody>
             </table>
+
+            {
+                isLoading && (
+                    <p className='text-center py-2 font-medium'>Cargando...</p>
+                )
+            }
 
             {
                 showChangeUseRole && (

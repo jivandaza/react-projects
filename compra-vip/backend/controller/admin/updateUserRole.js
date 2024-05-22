@@ -13,14 +13,14 @@ const updateUserRoleController = async (req, res) => {
         await UserModel.findByIdAndUpdate(userId, payload);
 
         res.json({
-            message: 'Se Actualizo el Rol',
+            message: 'Rol Actualizado',
             success: true,
             error: false
         })
     } catch (err) {
-        console.error('Error en Actualizar Rol de Usuario: ', err.message || err);
+        console.log(err.message || err);
 
-        res.status(500).json({
+        res.status(400).json({
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,

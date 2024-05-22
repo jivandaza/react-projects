@@ -5,7 +5,7 @@ const getProductsByCategory = async (req, res) => {
         const { category } = req?.body || req?.query;
         const data = await ProductModel.find({category});
 
-        res.status(201).json({
+        return res.status(201).json({
             data,
             message: 'OK',
             success: true,
@@ -13,10 +13,12 @@ const getProductsByCategory = async (req, res) => {
         });
     } catch (err) {
         console.log(err.message || err);
+
         res.status(400).json({
             message: 'Se ha producido un error, intenta más tarde',
             error: true,
             success: false,
+            data: []
         });
     }
 }

@@ -11,6 +11,8 @@ import CategoryProduct from '../pages/CategoryProduct';
 import ProductDetails from '../pages/ProductDetails';
 import Cart from '../pages/Cart';
 import SearchProduct from '../pages/SearchProduct';
+import PageNotFound from '../pages/PageNotFound';
+import UserAuthProtected from '../components/auth/UserAuthProtected';
 
 const router = createBrowserRouter([
     {
@@ -23,15 +25,27 @@ const router = createBrowserRouter([
             },
             {
                 path: 'acceder',
-                element: <Login />
+                element: (
+                    <UserAuthProtected>
+                        <Login />
+                    </UserAuthProtected>
+                )
             },
             {
                 path: 'recuperar-contraseña',
-                element: <ForgotPassword />
+                element: (
+                    <UserAuthProtected>
+                        <ForgotPassword />
+                    </UserAuthProtected>
+                )
             },
             {
                 path: 'registrarse',
-                element: <SignUp />
+                element: (
+                    <UserAuthProtected>
+                        <SignUp />
+                    </UserAuthProtected>
+                )
             },
             {
                 path: 'producto-categoria',
@@ -62,6 +76,10 @@ const router = createBrowserRouter([
                         element: <AllProducts />
                     }
                 ]
+            },
+            {
+                path: '*',
+                element: <PageNotFound />
             }
         ]
     }

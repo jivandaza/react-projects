@@ -50,7 +50,7 @@ const userSignInController = async (req, res) => {
                 data: token,
                 success: true,
                 error: false,
-                message: 'Iniciando la Sesión'
+                message: 'Iniciando Sesión'
             });
         } else {
             throw {

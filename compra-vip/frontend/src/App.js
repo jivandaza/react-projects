@@ -12,26 +12,31 @@ import './App.css';
 
 function App() {
 
+    const [isLoading, setIsLoading] = useState(true);
     const [countProductsOfCart, setCountProductsOfCart] = useState(0);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const fetchUserData = async () => {
+        setIsLoading(true);
+
         const response = await fetch(summaryApi.currentUser.url, {
             method: summaryApi.currentUser.method,
             credentials: 'include'
         });
 
-        const { failAuth, error, message, success, data } = await response.json();
+        const { failAuth, error, success, data } = await response.json();
+
+        if ( success )
+            dispatch(setUserDetails(data));
 
         if ( failAuth || error ) {
             dispatch(setUserDetails(null));
             navigate('/');
         }
 
-        if ( success )
-            dispatch(setUserDetails(data));
+        setIsLoading(false);
     };
 
     const fetchCountProductsToCart = async () => {
@@ -56,7 +61,7 @@ function App() {
             timeOut: 3000
         };
 
-        /**     User Details        */
+        /**     Detalles de Usuario        */
         fetchUserData();
         /**     Count Cart Product  */
         fetchCountProductsToCart();
@@ -67,9 +72,10 @@ function App() {
             <Context.Provider value={{
                 fetchUserData,
                 countProductsOfCart,
-                fetchCountProductsToCart
+                fetchCountProductsToCart,
+                isLoading
             }} >
-                <Header />
+                <Header isLoading={isLoading} />
 
                 <main className='min-h-[calc(100vh-120px)] pt-16'>
                     <Outlet />

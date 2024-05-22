@@ -9,7 +9,7 @@ const addProductToCartController = async (req, res) => {
 
         if( isProductAvailable ){
             return res.json({
-                message : 'Ya existe producto en carrito',
+                message : 'Producto existe en el carrito',
                 success : false,
                 error : true
             });
@@ -26,7 +26,7 @@ const addProductToCartController = async (req, res) => {
         await addToCartProduct.save();
 
         return res.json({
-            message : 'Producto añadido al carrito...',
+            message : 'Agregado al Carrito',
             success : true,
             error : false
         });

@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import AdminProductCard from './../components/AdminProductCard';
 import UploadProduct from './../components/UploadProduct';
-import summaryApi from "../common";
-import toastr from "toastr";
+import summaryApi from '../common';
+import toastr from 'toastr';
 
 const AllProducts = () => {
 
     const [showUploadProduct, setShowUploadProduct] = useState(false);
     const [allProducts, setAllProducts] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const loadingList = new Array(10).fill(null);
 
     const fetchAllProducts = async () => {
+        setIsLoading(true);
+
         const response = await fetch(summaryApi.allProducts.url, {
             method: summaryApi.allProducts.method,
             credentials: 'include'
@@ -24,6 +29,8 @@ const AllProducts = () => {
             toastr.info(message);
             setAllProducts(data);
         }
+
+        setIsLoading(false);
     };
 
     useEffect( ()  => {
@@ -42,15 +49,25 @@ const AllProducts = () => {
 
             <div className='flex items-center flex-wrap gap-5 py-4 h-[calc(80vh-85px)] overflow-y-scroll'>
                 {
-                    allProducts.map((item, index) => {
-                        return (
-                            <AdminProductCard
-                                data={item}
-                                key={'product'+index}
-                                allProducts={fetchAllProducts}
-                            />
-                        )
-                    })
+                    isLoading ? (
+                        loadingList.map((item, index) => {
+                            return (
+                                <div className='bg-slate-200 p-4 rounded-md shadow-md animate-pulse h-40' key={'loadingProduct'+index}>
+                                    <div className='w-40'></div>
+                                </div>
+                            )
+                        })
+                    ) : (
+                        allProducts.map((item, index) => {
+                            return (
+                                <AdminProductCard
+                                    data={item}
+                                    key={'product'+index}
+                                    allProducts={fetchAllProducts}
+                                />
+                            )
+                        })
+                    )
                 }
             </div>
 

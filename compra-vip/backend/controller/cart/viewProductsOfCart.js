@@ -10,6 +10,7 @@ const viewProductsOfCartController = async (req, res) => {
 
         return res.json({
             data,
+            message: 'OK',
             success: true,
             error: false
         });
