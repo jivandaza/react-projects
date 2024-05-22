@@ -1,6 +1,10 @@
 const userLogoutController = async (req, res) => {
     try {
-        res.clearCookie('token');
+        res.clearCookie('token', {
+            httpOnly: true,
+            secure: true,
+            path: '/'
+        });
 
         res.json({
             message: 'Cerrando Sesión',
