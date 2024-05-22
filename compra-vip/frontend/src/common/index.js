@@ -1,4 +1,4 @@
-const backendDomain = 'http://localhost:3001';
+const backendDomain = window.location.origin;
 
 const summaryApi = {
     signUp: {

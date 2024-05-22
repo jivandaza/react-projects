@@ -237,7 +237,10 @@ const Cart = () => {
                                                     </div>
 
                                                     <div className='px-4'>
-                                                        <button className='bg-blue-600 p-2 text-white w-full mt-2 font-bold rounded-full hover:bg-blue-700'>
+                                                        <button
+                                                            className='bg-blue-600 p-2 text-white w-full mt-2 font-bold rounded-full hover:bg-blue-700'
+                                                            onClick={() => alert('Funcionalidad no disponible')}
+                                                        >
                                                             Pagar
                                                         </button>
                                                     </div>
