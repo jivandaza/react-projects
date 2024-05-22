@@ -11,11 +11,11 @@ dotenv.config();
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const app = express();
-const port = 3001 || process.env.PORT;
+const port = process.env.PORT || 3001;;
 
 app.use(express.json());
 app.use(cors({
-    origin: process.env.PORT,
+    origin: process.env.CLIENT_URL,
     credentials: true,
 }));
 app.use(cookieParser(0));
