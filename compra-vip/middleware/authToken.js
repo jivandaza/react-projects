@@ -10,7 +10,7 @@ const authToken = async (req, res, next) => {
             };
         }
 
-         jwt.verify(token, process.env.TOKEN_SECRET_KEY, function (err, decoded){
+         jwt.verify(token, "LHSADFIUYEWLAHJADSHFGSDGAFNDSDSFTRYUFGHDF", function (err, decoded){
              if( err ){
                  throw {
                      failAuth: true
