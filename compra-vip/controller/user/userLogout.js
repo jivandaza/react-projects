@@ -1,7 +1,10 @@
 const userLogoutController = async (req, res) => {
     try {
         res.clearCookie('token', {
-            expires: new Date(0)
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'Strict',
+            path: '/'
         });
 
         res.json({
