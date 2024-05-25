@@ -17,7 +17,6 @@ const MobileNavigation = () => {
                                 <div className='text-2xl'>
                                     {nav.icon}
                                 </div>
-                                <p className='text-sm'>{nav.label}</p>
                             </NavLink>
                         )
                     })

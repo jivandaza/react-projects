@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { SearchContext } from '../context/SearchContext';
+import BannerHome from '../components/BannerHome';
 
 const Home = () => {
+
+    const { setShowSearch } = useContext(SearchContext);
+
+    useEffect(() => {
+        setShowSearch(false);
+    }, []);
+
     return (
         <div>
-            Home
+            <BannerHome />
         </div>
     )
 };

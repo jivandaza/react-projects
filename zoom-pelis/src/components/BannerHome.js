@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa6';
-import axios from 'axios';
 
 const BannerHome = () => {
 
@@ -13,7 +12,6 @@ const BannerHome = () => {
 
     //console.log(bannerData);
     //console.log(imageURL);
-
 
     const handleNext = ()=> {
         if ( currentImage < bannerData.length - 1 )

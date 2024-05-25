@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {SearchContext} from "../context/SearchContext";
+import { SearchContext } from '../context/SearchContext';
 
 const ExplorePage = () => {
 
@@ -11,7 +11,7 @@ const ExplorePage = () => {
 
     return (
         <div>
-            ExplorePage
+            Explore Page
         </div>
     );
 };
