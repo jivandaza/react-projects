@@ -23,3 +23,18 @@ export const mobileNavigation = [
     },
     ...navigation
 ];
+
+export const routeNavigation = [
+    {
+        href: '/'
+    },
+    {
+        href: 'buscar'
+    },
+    {
+        href: 'tv'
+    },
+    {
+        href: 'pelicula'
+    }
+]

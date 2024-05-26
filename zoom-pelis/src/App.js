@@ -1,12 +1,13 @@
 import './App.css';
-import { useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setBannerData, setImageURL } from './store/movieoSlice';
-import { navigation } from './common/navigation';
+import { routeNavigation } from './common/navigation';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import NotFoundPage from './pages/NotFoundPage';
+import Context from './context/index';
 import axios from 'axios';
 
 function App() {
@@ -17,21 +18,25 @@ function App() {
     const currentPath = location.pathname.split('/').filter(Boolean).pop();
 
     // Comparo el ultímo segmento de la ruta con las rutas de navegación
-    const routeExists = navigation.some(item => item.href === currentPath || '/' === currentPath || !currentPath);
-
-    console.log(routeExists);
+    const routeExists = routeNavigation.some(item => item.href === currentPath || !currentPath);
 
     const dispatch = useDispatch();
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const fetchTrendingData = async ()=> {
         try {
+            setIsLoading(true);
+
             const response = await axios.get('/trending/all/week');
 
             const { results } = response.data;
 
-            console.log(results);
+            //console.log(results);
 
             dispatch(setBannerData(results));
+
+            setIsLoading(false);
         } catch (error) {
             console.error(error.message || error);
         }
@@ -39,13 +44,17 @@ function App() {
 
     const fetchConfiguration = async()=>{
         try {
-            const response = await axios.get("/configuration");
+            setIsLoading(true);
+
+            const response = await axios.get('/configuration');
 
             const { images } = response.data;
 
-            console.log(images);
+            //console.log(images);
 
-            dispatch(setImageURL(images.secure_base_url+"original"))
+            dispatch(setImageURL(images.secure_base_url+'original'));
+
+            setIsLoading(false);
         } catch (error) {
             console.error(error.message || error);
         }
@@ -58,13 +67,17 @@ function App() {
 
     return (
         routeExists ? (
-            <main className='pb-14 lg:pb-0'>
-                <Header />
-                <div className='min-h-[90vh]'>
-                    <Outlet />
-                </div>
-                <Footer />
-            </main>
+            <Context.Provider value={{
+                isLoading
+            }} >
+                <main className='pb-14 lg:pb-0'>
+                    <Header />
+                    <div className='min-h-[90vh]'>
+                        <Outlet />
+                    </div>
+                    <Footer />
+                </main>
+            </Context.Provider>
         ) : (
             <NotFoundPage />
         )

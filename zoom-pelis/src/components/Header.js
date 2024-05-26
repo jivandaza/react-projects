@@ -68,9 +68,9 @@ const Header = () => {
                                 {
                                     navigation.map((item,index)=>{
                                         return(
-                                            <div>
+                                            <div key={item.label+"header"+index}>
                                                 <NavLink
-                                                    key={item.label+"header"+index} to={item.href}
+                                                    to={item.href}
                                                     className={({isActive})=>`px-2 py-1 hover:text-neutral-100 hover:underline transition duration-300 ease-in-out ${isActive && "text-neutral-200"}`}
                                                     style={{ textUnderlineOffset: '4px'}}
                                                 >
