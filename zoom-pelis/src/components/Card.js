@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import Context from "../context";
 
 const Card = ({
     data,
@@ -10,12 +11,17 @@ const Card = ({
     media_type
 }) => {
 
+    const { setRouterDetails } = useContext(Context);
+
     const imageURL = useSelector(state => state.movieoData.imageURL);
 
     const mediaType = data.media_type ?? media_type;
 
     return (
-        <Link to={"/"+mediaType+"/"+data.id} className='w-full min-w-[230px] max-w-[230px] h-80 overflow-hidden block rounded relative hover:scale-105 transition-all' >
+        <Link
+            to={"/"+mediaType+"/"+data.id} className='w-full min-w-[230px] max-w-[230px] h-80 overflow-hidden block rounded relative hover:scale-105 transition-all'
+            onClick={() => setRouterDetails(true)}
+        >
             {
                 data?.poster_path ? (
                     <img
@@ -28,7 +34,7 @@ const Card = ({
                 )
             }
 
-            <div className='absolute top-4 '>
+            <div className='absolute top-4'>
                 {
                     trending && (
                         <div className='py-1 px-4 backdrop-blur-3xl rounded-r-full bg-black/60 overflow-hidden'>

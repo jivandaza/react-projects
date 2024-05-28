@@ -6,23 +6,17 @@ import { isMobile } from '../helpers/detectDevice';
 import { navigation } from '../common/navigation';
 import logo from '../assets/logo192.png';
 import userIcon from '../assets/user.png';
-import {SearchContext} from "../context/SearchContext";
+import { SearchContext } from "../context/SearchContext";
 
 const Header = () => {
 
     const location = useLocation();
-    const removeSpace = location?.search?.slice(3)?.split('%20')?.join(' ');
-    const [searchInput,setSearchInput] = useState(removeSpace);
+
+    const query = location?.search?.slice(3);
+
     const navigate = useNavigate();
 
     const { showSearch, setShowSearch } = useContext(SearchContext);
-
-    useEffect(()=>{
-        if ( searchInput )
-            navigate(`/buscar?q=${searchInput}`);
-        else
-            navigate(`/`);
-    }, [searchInput]);
 
     const handleSubmit = (e)=> {
         e.preventDefault();
@@ -51,8 +45,8 @@ const Header = () => {
                                 type='text'
                                 placeholder='Buscar...'
                                 className='bg-transparent px-4 py-1 outline-none border-none w-full'
-                                onChange={(e)=> setSearchInput(e.target.value)}
-                                value={searchInput}
+                                onChange={(e)=> navigate(`/buscar?q=${e.target.value}`)}
+                                value={query?.split("%20")?.join(" ")}
                             />
                         </>
                     ) : (
@@ -92,8 +86,8 @@ const Header = () => {
                                         type='text'
                                         placeholder='Buscar...'
                                         className='bg-transparent px-4 py-1 outline-none border-none hidden lg:block'
-                                        onChange={(e)=> setSearchInput(e.target.value)}
-                                        value={searchInput}
+                                        onChange={(e)=> navigate(`/buscar?q=${e.target.value}`)}
+                                        value={query?.split("%20")?.join(" ")}
                                     />
                                     <button className='text-2xl text-white' onClick={handleSubmit} >
                                         <IoSearchOutline/>

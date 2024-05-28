@@ -1,5 +1,5 @@
 import './App.css';
-import {useEffect, useState} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setBannerData, setImageURL } from './store/movieoSlice';
@@ -21,6 +21,8 @@ function App() {
     const routeExists = routeNavigation.some(item => item.href === currentPath || !currentPath);
 
     const dispatch = useDispatch();
+
+    const [routerDetails, setRouterDetails] = useState(false);
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -66,9 +68,10 @@ function App() {
     },[]);
 
     return (
-        routeExists ? (
+        routeExists || routerDetails ? (
             <Context.Provider value={{
-                isLoading
+                isLoading,
+                setRouterDetails
             }} >
                 <main className='pb-14 lg:pb-0'>
                     <Header />
