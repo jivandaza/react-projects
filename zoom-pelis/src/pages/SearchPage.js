@@ -39,8 +39,8 @@ const SearchPage = () => {
 
     useEffect(() => {
         if ( query ) {
-            setData([]);  // Reset data for new query
-            setPage(1);   // Reset page for new query
+            setData([]);
+            setPage(1);
             fetchData();
         }
     }, [query]);
@@ -64,9 +64,9 @@ const SearchPage = () => {
 
                 <div className='grid grid-cols-[repeat(auto-fit,230px)] gap-6 justify-center lg:justify-start'>
                     {
-                        data.map((searchData)=>{
+                        data.map((searchData, index)=>{
                             return(
-                                <Card data={searchData} key={searchData.id+"search"} media_type={searchData.media_type}/>
+                                <Card data={searchData} key={searchData.id+"search"+index} media_type={searchData.media_type}/>
                             )
                         })
                     }
